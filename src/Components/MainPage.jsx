@@ -1,0 +1,1 @@
+//the main ui where the cocktails card are listed in a grid (handled by Cocktail Selection). (starts with a fullscreen logo at the top, scroling down or pressing "start" scrolls to the selection located below)
