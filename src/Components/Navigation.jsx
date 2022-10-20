@@ -1,1 +1,0 @@
-//a navigationbar displayed on the main page (logo left, settings right)
