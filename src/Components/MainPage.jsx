@@ -13,6 +13,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import CocktailSelection from './CocktailSelection'
 
+import Scroll from 'react-scroll'
+
+var Element  = Scroll.Element;
+var scroller = Scroll.scroller;
+
 class MainPage extends React.Component {
     render() {
         const randomstring = Math.random().toString(36).substring(2,7);
@@ -21,6 +26,7 @@ class MainPage extends React.Component {
             <div>
                 <Navigation/>
                 <Banner/>
+                <Element name="ScrollToElement"></Element>
                 <CocktailSelection/>
                 <Footer/>
             </div>
@@ -38,7 +44,13 @@ class Banner extends React.Component {
                 <div className="h-25 d-inline-block w-20 my-5">
                     <img className="mb-5 h-100" src={logo} alt="..." />
                 </div>
-                <Button variant="outline-light">Start ordering...</Button>
+                <Button variant="outline-light"
+                        onClick={() => scroller.scrollTo('ScrollToElement', {duration: 1000,
+                                                                               delay: 10,
+                                                                               smooth: true})
+                                }>
+                    Start ordering...
+                </Button>
                 <p className="text-white display-3 mt-auto">&#8595;</p>
             </Container>
         );
