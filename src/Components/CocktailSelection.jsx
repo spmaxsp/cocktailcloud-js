@@ -95,7 +95,6 @@ class CocktailSelection extends React.Component {
     
     componentDidMount() {
         this.fetchData();
-        console.log("is Loaded (Mount): " + this.state.isLoaded);
     } 
 
     renderCard(id) {

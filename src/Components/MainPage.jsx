@@ -2,6 +2,7 @@
 import React from 'react';
 
 import gradient from 'random-gradient'
+import Scroll from 'react-scroll'
 
 import logo from '../assets/Cocktailcloud_Logo_SVG.svg';
 
@@ -13,7 +14,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import CocktailSelection from './CocktailSelection'
 
-import Scroll from 'react-scroll'
 
 var Element  = Scroll.Element;
 var scroller = Scroll.scroller;
