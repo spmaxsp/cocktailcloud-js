@@ -68,7 +68,17 @@ class Footer extends React.Component {
 class Navigation extends React.Component {
     render() {
         return (
-            <Container></Container>
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand>
+                        <Container fluid>
+                            <img alt="" src={logo} width="30" height="30" className="d-inline-block align-top"/>
+                            Cocktail Cloud
+                        </Container>
+                    </Navbar.Brand>
+                    <Button variant="outline-light" >Settings</Button>
+                </Container>
+            </Navbar>
         );
     }
 }
