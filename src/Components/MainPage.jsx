@@ -13,6 +13,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import CocktailSelection from './CocktailSelection'
+import SettingsModal from './SettingsMenue'
 
 
 var Element  = Scroll.Element;
@@ -66,19 +67,28 @@ class Footer extends React.Component {
 }
 
 class Navigation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalShow: false,
+        };
+    }
     render() {
         return (
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand>
-                        <Container fluid>
-                            <img alt="" src={logo} width="30" height="30" className="d-inline-block align-top"/>
-                            Cocktail Cloud
-                        </Container>
-                    </Navbar.Brand>
-                    <Button variant="outline-light" >Settings</Button>
-                </Container>
-            </Navbar>
+            <>
+                <Navbar bg="dark" variant="dark">
+                    <Container>
+                        <Navbar.Brand>
+                            <Container fluid>
+                                <img alt="" src={logo} width="30" height="30" className="d-inline-block align-top" />
+                                Cocktail Cloud
+                            </Container>
+                        </Navbar.Brand>
+                        <Button variant="outline-light" onClick={() => this.setState({modalShow: true})}>Settings</Button>
+                    </Container>
+                </Navbar>
+                <SettingsModal show={this.state.modalShow} onHide={() => this.setState({ modalShow: false })} />
+            </>
         );
     }
 }
