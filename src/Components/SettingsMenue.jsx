@@ -24,88 +24,60 @@ class ConfigurationSettings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fetchSettings: {
-                error: null,
-                isLoaded: false,
-                items: {}
-            },
-            fetchIngrediants: {
-                error: null,
-                isLoaded: false,
-                items: {}
-            },
             unsupplyed_ingrediants: []
         };
     }
     
-    fetchSettingsData() {
-        console.log("fetchSettings")
-        fetch("http://localhost:43560/cocktail/info/")
-            .then(res => res.json())
-            .then((result) => {
-                console.log("data: " + result);
-                this.setState({
-                    fetchSettings: {
-                        isLoaded: true,
-                        items: result
-                    }
-                });
-                console.log("is Loaded (fetch): " + this.state.fetchSettings.isLoaded);
-                console.log("items:" + this.state.fetchSettings.items)
-                },
-
-                (error) => {
-                    this.setState({
-                        fetchSettings: {
-                            isLoaded: true,
-                            error
-                        }
-                    });
-                    console.log("is Loaded (fetch): " + this.state.fetchSettings.isLoaded);
-                }
-            )
-    }
-
-    fetchIngrediantData() {
-        console.log("fetchcocktailData")
-        fetch("http://localhost:43560/ingrediant/list")
-            .then(res => res.json())
-            .then((result) => {
-                console.log("data: " + result);
-                this.setState({
-                    fetchIngrediant: {
-                            isLoaded: true,
-                            items: result
-                        }
-                    });
-                console.log("is Loaded (fetch): " + this.state.fetchIngrediant.isLoaded);
-                console.log("items:" + this.state.fetchIngrediant.items)
-                },
-
-                (error) => {
-                    this.setState({
-                        fetchIngrediant: {
-                            isLoaded: true,
-                            error
-                        }
-                    });
-                    console.log("is Loaded (fetch): " + this.state.fetchIngrediant.isLoaded);
-                }
-            )
+    fetchAPI(request) {
+        return fetch(request, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(response => response.json())
     }
 
     componentDidMount() {
-        this.fetchSettingsData();
-        this.fetchIngrediantData();
+        const api_request = ['http://localhost:43560/settings/info',
+                             'http://localhost:43560/ingrediant/list'];
+        Promise.all(api_request.map(this.fetchAPI)).then(
+        ([configuration, ingrediants]) => {
+            this.setState({
+                configuration,
+                ingrediants,
+                unsupplyed_ingrediants: this.get_unsupplyed_ingrediants(configuration,ingrediants)
+            });
+        },
+        (error) => {
+            console.log("error fetching resources:");
+            console.log(error);
+        })
     } 
 
-    //get_unsupplyed_ingrediants() {
-    //
-    //}
+    get_unsupplyed_ingrediants(configuration,ingrediants) {
+        const unsupplyed_ingrediants = []
+        for (const id of Object.keys(ingrediants)){
+            if (!Object.values(configuration.pump).includes(id) && !configuration.manual.includes(id)){
+                unsupplyed_ingrediants.push(id);
+            }
+        }
+        return(unsupplyed_ingrediants); 
+    }
 
-    //renderPumps() {
-    //    
-    //}
+    renderPumps() {
+        
+    }
+
+    generate_optionlist() {
+        const result = [];
+        this.state.unsupplyed_ingrediants.forEach((key, i) => result.push({ value: key, label: this.state.ingrediants[key] }));
+        console.log(result);
+        return result;
+    }
+
+    update_manual(value) {
+        console.log(value);
+    }
 
     render() {
         return (
@@ -128,7 +100,7 @@ class ConfigurationSettings extends React.Component {
                         </ListGroup>
                     </Card>
                 <h4>Manual Ingrediants</h4>
-                <Select options={['test1','test2','test3']} isMulti />
+                <Select options={this.generate_optionlist()} onChange={value => this.update_manual(value)} isMulti />
             </>
         )
     }
