@@ -103,29 +103,6 @@ class ConfigurationSettings extends React.Component {
             })
     }
 
-    update_ingrediant_value(value) {
-        const request = ""
-        Promise.all([this.fetchAPI(request)]).then(
-            ([ingrediants]) => {
-                this.setState({
-                    ingrediants
-                });
-                this.setState({
-                    unsupplyed_ingrediants: this.get_unsupplyed_ingrediants(this.state.configuration, this.state.ingrediants),
-                });
-                this.setState({
-                    manual_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, false),
-                    manual_value: this.generate_optionlist(this.state.configuration.manual, false),
-                    pump_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, true),
-                    pump_value: this.generate_optionlist(this.state.configuration.pump, false)
-                });
-            },
-            (error) => {
-                console.log("error fetching resources:");
-                console.log(error);
-            })
-    }
-
     generate_optionlist(data, add_null) {
         const result = [];
         data.forEach((key, i) => result.push({ value: key, label: this.state.ingrediants[key] }));
