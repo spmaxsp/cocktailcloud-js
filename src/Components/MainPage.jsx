@@ -28,12 +28,14 @@ class MainPage extends React.Component {
                 <Navigation/>
                 <Banner/>
                 <Element name="ScrollToElement"></Element>
-                <CocktailSelection/>
+                
                 <Footer/>
             </div>
         );
     }
 }
+
+//<CocktailSelection/>
 
 class Banner extends React.Component {
     render() {

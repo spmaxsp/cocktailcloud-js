@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+import {loadData} from './api/CocktailCloud';
+
 class ConfigurationSettings extends React.Component {
     constructor(props) {
         super(props);
@@ -12,23 +14,36 @@ class ConfigurationSettings extends React.Component {
             manual_options: [],
             manual_value: [],
             pump_options: [],
-            pump_value: {}
+            pump_value: {},
+            api: {
+                error_state: false,
+                last_error_msg: {},
+                data: {}
+            }
         };
     }
 
     componentDidMount() {
-        this.loadData();
-    }
-    
-    fetchAPI(request) {
-        return fetch(request, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }).then(response => response.json())
+        const api_request = ['http://localhost:43560/settings/info',
+                             'http://localhost:43560/ingrediant/list'];
+
+        loadData(api_request, this.state.api).then(
+            function(api) {this.display_data(api);}
+        );
     }
 
+    display_data(api){
+        this.setState({api: api});
+        console.log(this.state);
+        var unsupplyed_ingrediants = this.get_unsupplyed_ingrediants(this.state.api.data.config, this.state.api.data.ingrediants);
+        this.setState({
+            manual_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, false),
+            manual_value: this.generate_optionlist(this.state.api.data.config.manual, false),
+            pump_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, true),
+            pump_value: this.generate_optionlist(this.state.api.data.config.pump, false)
+        });
+    }
+    
     get_unsupplyed_ingrediants(configuration, ingrediants) {
         const unsupplyed_ingrediants = []
         for (const id of Object.keys(ingrediants)){
@@ -38,31 +53,6 @@ class ConfigurationSettings extends React.Component {
         }
         return(unsupplyed_ingrediants); 
     }
-
-    loadData() {
-        const api_request = ['http://localhost:43560/settings/info',
-                             'http://localhost:43560/ingrediant/list'];
-        Promise.all(api_request.map(this.fetchAPI)).then(
-        ([configuration, ingrediants]) => {
-            this.setState({
-                configuration,
-                ingrediants
-            });
-            this.setState({
-                unsupplyed_ingrediants: this.get_unsupplyed_ingrediants(this.state.configuration, this.state.ingrediants),
-            });
-            this.setState({
-                manual_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, false),
-                manual_value: this.generate_optionlist(this.state.configuration.manual, false),
-                pump_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, true),
-                pump_value: this.generate_optionlist(this.state.configuration.pump, false)
-            });
-        },
-        (error) => {
-            console.log("error fetching resources:");
-            console.log(error);
-        })
-    } 
 
     update_settings_value(setting, value, id=0) {
         var request = "http://localhost:43560/settings/edit"
