@@ -9,118 +9,107 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import CocktailCard from './CocktailCard'
+import { useState } from 'react';
 
-class SortMenue extends React.Component {
-    render() {
-        return (
-            <Container float className='my-4 mx-3'>
-                <Row>
-                    <Col lg={3} className='mb-3'>
-                        <InputGroup className="mb-3">
-                            <Form.Select aria-label="Default select example">
-                                <option>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </Form.Select>
-                            <Button variant="outline-secondary" id="button-addon2">
-                                Button
-                            </Button>
-                        </InputGroup>
-                    </Col>
-                    <Col lg={3} className='mb-3'>
-                        <InputGroup className="mb-3">
-                            <Form.Select aria-label="Default select example">
-                                <option>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </Form.Select>
-                            <Button variant="outline-secondary" id="button-addon2">
-                                Button
-                            </Button>
-                        </InputGroup>
-                    </Col>
-                    <Col className='mb-3 col-lg-auto'>
-                        <InputGroup className="mb-3">
-                            <Form.Control
-                                placeholder="Recipient's username"
-                                aria-label="Recipient's username"
-                                aria-describedby="basic-addon2"
-                            />
-                            <Button variant="outline-secondary" id="button-addon2">
-                                Button
-                            </Button>
-                        </InputGroup>
-                    </Col>
-                </Row>            
-            </Container>
-        );
-    }
+const SortMenue = () => {
+    return (
+        <Container float className='my-4 mx-3'>
+            <Row>
+                <Col lg={3} className='mb-3'>
+                    <InputGroup className="mb-3">
+                        <Form.Select aria-label="Default select example">
+                            <option>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </Form.Select>
+                        <Button variant="outline-secondary" id="button-addon2">
+                            Button
+                        </Button>
+                    </InputGroup>
+                </Col>
+                <Col lg={3} className='mb-3'>
+                    <InputGroup className="mb-3">
+                        <Form.Select aria-label="Default select example">
+                            <option>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </Form.Select>
+                        <Button variant="outline-secondary" id="button-addon2">
+                            Button
+                        </Button>
+                    </InputGroup>
+                </Col>
+                <Col className='mb-3 col-lg-auto'>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            placeholder="Recipient's username"
+                            aria-label="Recipient's username"
+                            aria-describedby="basic-addon2"
+                        />
+                        <Button variant="outline-secondary" id="button-addon2">
+                            Button
+                        </Button>
+                    </InputGroup>
+                </Col>
+            </Row>            
+        </Container>
+    );
 }
 
-class CocktailSelection extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            items: []
-        };
-    }
+const CocktailSelection = (props) => {
+    const [fetcherror, setError] = useState(null);
+    const [fetchLoaded, setIsLoaded] = useState(false);
+    const [fetchitems, setItems] = useState([]);
 
-    fetchData() {
+
+    const fetchData = () => {
         console.log("fetchData")
         fetch("http://localhost:43560/cocktail/list")
             .then(res => res.json())
             .then((result) => {
                 console.log("data: " + result);
-                this.setState({
-                        isLoaded: true,
-                        items: result
-                    });
-                console.log("is Loaded (fetch): " + this.state.isLoaded);
-                console.log("items:" + this.state.items)
+                setIsLoaded(true);
+                setItems(result);
+                setError(null);
+                console.log("is Loaded (fetch): " + fetchLoaded);
+                console.log("items:" + fetchitems)
                 },
 
                 (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                    console.log("is Loaded (fetch): " + this.state.isLoaded);
+                    setError(error);
+                    setItems([]);
+                    setIsLoaded(true);
+                    console.log("is Loaded (fetch): " + fetchLoaded);
                 }
             )
     }
     
-    componentDidMount() {
-        this.fetchData();
-    } 
 
-    renderCard(id) {
+    this.fetchData();
+
+    const renderCard = (id) => {
         return <CocktailCard id={id} />;
     }
 
-    render() {
-        const { error, isLoaded, items } = this.state;
-        if (error) {
-            return( <div>Error: {error.message}</div> );
-        } 
-        else if (!isLoaded) {
-            return( <div>Loading...</div> );
-        }
-        else {
-            return(
+    if (fetcherror) {
+        return( <div>Error: {fetcherror.message}</div> );
+    } 
+    else if (!fetchLoaded) {
+        return( <div>Loading...</div> );
+    }
+    else {
+        return(
+            <Container>
+                <SortMenue/>
                 <Container>
-                    <SortMenue/>
-                    <Container>
-                        <Row pb={4}>
-                            { items.map(this.renderCard) }
-                        </Row>
-                    </Container>
+                    <Row pb={4}>
+                        { fetchData.map(this.renderCard) }
+                    </Row>
                 </Container>
-            );
-        }
+            </Container>
+        );
     }
 }
 
