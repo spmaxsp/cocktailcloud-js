@@ -5,47 +5,16 @@ import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-import {loadData} from './api/CocktailCloud';
-
-class ConfigurationSettings extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            manual_options: [],
-            manual_value: [],
-            pump_options: [],
-            pump_value: {},
-            api: {
-                error_state: false,
-                last_error_msg: {},
-                data: {}
-            }
-        };
-    }
-
-    componentDidMount() {
-        const api_request = ['http://localhost:43560/settings/info',
-                             'http://localhost:43560/ingrediant/list'];
-
-        loadData(api_request, this.state.api).then(
-            function(api) {this.display_data(api);}
-        );
-    }
-
-    display_data(api){
-        this.setState({api: api});
-        console.log(this.state);
-        var unsupplyed_ingrediants = this.get_unsupplyed_ingrediants(this.state.api.data.config, this.state.api.data.ingrediants);
-        this.setState({
-            manual_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, false),
-            manual_value: this.generate_optionlist(this.state.api.data.config.manual, false),
-            pump_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, true),
-            pump_value: this.generate_optionlist(this.state.api.data.config.pump, false)
-        });
-    }
+const ConfigurationSettings = (props) => {
     
-    get_unsupplyed_ingrediants(configuration, ingrediants) {
-        const unsupplyed_ingrediants = []
+            //manual_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, false),
+            //manual_value: this.generate_optionlist(this.state.api.data.config.manual, false),
+            //pump_options: this.generate_optionlist(this.state.unsupplyed_ingrediants, true),
+            //pump_value: this.generate_optionlist(this.state.api.data.config.pump, false)
+
+    
+    function get_unsupplyed_ingrediants(configuration, ingrediants) {
+        const unsupplyed_ingrediants = [];
         for (const id of Object.keys(ingrediants)){
             if (!Object.values(configuration.pump).includes(id) && !configuration.manual.includes(id)){
                 unsupplyed_ingrediants.push(id);
@@ -54,8 +23,8 @@ class ConfigurationSettings extends React.Component {
         return(unsupplyed_ingrediants); 
     }
 
-    update_settings_value(setting, value, id=0) {
-        var request = "http://localhost:43560/settings/edit"
+    function update_settings_value(setting, value, id=0) {
+        var request = "http://localhost:43560/settings/edit";
         switch(setting) {
             case "pump":
                 request = request + "/pump_" + id + "?val1=" + value.value;
@@ -125,4 +94,4 @@ class ConfigurationSettings extends React.Component {
     }
 }
 
-export default ConfigurationSettings
+//export default ConfigurationSettings

@@ -10,6 +10,11 @@ import Col from 'react-bootstrap/Col';
 
 import CocktailCard from './CocktailCard'
 import { useState } from 'react';
+import { useEffect } from 'react'
+
+import { useAPI } from './api/ApiContext.js';
+import useFetch from './api/fetchHook.js';
+
 
 const SortMenue = () => {
     return (
@@ -59,53 +64,36 @@ const SortMenue = () => {
 }
 
 const CocktailSelection = (props) => {
-    const [fetcherror, setError] = useState(null);
-    const [fetchLoaded, setIsLoaded] = useState(false);
-    const [fetchitems, setItems] = useState([]);
 
-
-    const fetchData = () => {
-        console.log("fetchData")
-        fetch("http://localhost:43560/cocktail/list")
-            .then(res => res.json())
-            .then((result) => {
-                console.log("data: " + result);
-                setIsLoaded(true);
-                setItems(result);
-                setError(null);
-                console.log("is Loaded (fetch): " + fetchLoaded);
-                console.log("items:" + fetchitems)
-                },
-
-                (error) => {
-                    setError(error);
-                    setItems([]);
-                    setIsLoaded(true);
-                    console.log("is Loaded (fetch): " + fetchLoaded);
-                }
-            )
-    }
+    const { loading, error, data } = useFetch(
+                                        {
+                                            'db': 'cocktail',
+                                            'action': 'list',
+                                            'id': null,
+                                            'value': null,
+                                            'data': null
+                                        }
+                                        );
     
-
-    this.fetchData();
-
     const renderCard = (id) => {
-        return <CocktailCard id={id} />;
+        console.log(id);
+        //return <CocktailCard key={id} id={id} />;
     }
 
-    if (fetcherror) {
-        return( <div>Error: {fetcherror.message}</div> );
-    } 
-    else if (!fetchLoaded) {
-        return( <div>Loading...</div> );
+    if (loading || !data) {
+        return <div>Loading...</div>;
     }
-    else {
+    else if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+    else{
+        console.log(data);
         return(
             <Container>
                 <SortMenue/>
                 <Container>
                     <Row pb={4}>
-                        { fetchData.map(this.renderCard) }
+                        {data.cocktails.map(renderCard)}
                     </Row>
                 </Container>
             </Container>

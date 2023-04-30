@@ -17,33 +17,7 @@ const GlobalSettings = () => {
 }
 
 const UserSettings = () => {
-    const fetchUsers = () => {
-        console.log("fetchcocktailData")
-        fetch("http://localhost:43560/user/list")
-            .then(res => res.json())
-            .then((result) => {
-                console.log("data: " + result);
-                this.setState({
-                    fetchIngrediant: {
-                            isLoaded: true,
-                            items: result
-                        }
-                    });
-                console.log("is Loaded (fetch): " + this.state.fetchIngrediant.isLoaded);
-                console.log("items:" + this.state.fetchIngrediant.items)
-                },
 
-                (error) => {
-                    this.setState({
-                        fetchIngrediant: {
-                            isLoaded: true,
-                            error
-                        }
-                    });
-                    console.log("is Loaded (fetch): " + this.state.fetchIngrediant.isLoaded);
-                }
-            )
-    }
 
     return (
         <>
@@ -52,33 +26,7 @@ const UserSettings = () => {
 }
 
 const CocktailSettings = () => {
-    const fetchCocktail = () => {
-        console.log("fetchcocktailData")
-        fetch("http://localhost:43560/ingrediant/list")
-            .then(res => res.json())
-            .then((result) => {
-                console.log("data: " + result);
-                this.setState({
-                    fetchIngrediant: {
-                            isLoaded: true,
-                            items: result
-                        }
-                    });
-                console.log("is Loaded (fetch): " + this.state.fetchIngrediant.isLoaded);
-                console.log("items:" + this.state.fetchIngrediant.items)
-                },
-
-                (error) => {
-                    this.setState({
-                        fetchIngrediant: {
-                            isLoaded: true,
-                            error
-                        }
-                    });
-                    console.log("is Loaded (fetch): " + this.state.fetchIngrediant.isLoaded);
-                }
-            )
-    }
+    
 
     return (
         <>

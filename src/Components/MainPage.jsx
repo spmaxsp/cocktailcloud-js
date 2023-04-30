@@ -12,8 +12,10 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
+import { APIProvider } from './api/ApiContext.js';
+
 import CocktailSelection from './CocktailSelection'
-import SettingsModal from './SettingsMenue'
+//import SettingsModal from './SettingsMenue'
 
 
 var Element  = Scroll.Element;
@@ -21,13 +23,13 @@ var scroller = Scroll.scroller;
 
 const MainPage = () => {
     return (
-        <div>
+        <APIProvider>
             <Navigation/>
             <Banner/>
             <Element name="ScrollToElement"></Element>
             <CocktailSelection/>
             <Footer/>
-        </div>
+        </APIProvider>
     );
 }
 
@@ -74,10 +76,12 @@ const Navigation = () => {
                     <Button variant="outline-light" onClick={() => setModalShow(true)}>Settings</Button>
                 </Container>
             </Navbar>
-            <SettingsModal show={modalShow} onHide={() => setModalShow(false)} />
+            
         </>
     );
 }
 
 export default MainPage;
+
+// <SettingsModal show={modalShow} onHide={() => setModalShow(false)} />
 
