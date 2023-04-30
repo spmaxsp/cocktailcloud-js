@@ -69,7 +69,7 @@ const CocktailSelection = (props) => {
     
     const renderCard = (id) => {
         console.log(id);
-        //return <CocktailCard key={id} id={id} />;
+        return <CocktailCard key={id} id={id} />;
     }
 
     if (loading || !data) {

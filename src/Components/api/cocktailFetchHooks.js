@@ -13,16 +13,12 @@ const useCocktailList = () => {
 
     const refreshCocktails = () => {
         setRequest({
-            api: 'v2',
-            db: 'cocktail',
             action: 'list'
         });
     };
 
     const removeCocktail = (id) => {
         setRequest({
-            api: 'v2',
-            db: 'cocktail',
             action: 'delete',
             id: id
         });
@@ -33,37 +29,33 @@ const useCocktailList = () => {
 };
 
 const useCocktailInfo = (id) => {
-    var request = {
+    const [request, setRequest] = useState({
         api: 'v2',
         db: 'cocktail',
         action: 'info',
-        id: id
-    }
+        id: id,
+        value: null,
+        data: {'format': 'long'}
+    });
+
     const refreshCocktail = (id) => {
-        request = {
-            api: 'v2',
-            db: 'cocktail',
-            action: 'info',
-            id: id
-        }
+        setRequest({
+            action: 'info'
+        });
     }
     const editCocktail = (id, data) => {
-        request = {
-            api: 'v2',
-            db: 'cocktail',
+        setRequest({
             action: 'edit',
             id: id,
             data: data
-        }
+        });
     }
     const editCocktailIngredients = (id, data) => {
-        request = {
-            api: 'v2',
-            db: 'cocktail',
-            action: 'edit',
+        setRequest({
+            action: 'editIngredients',
             id: id,
             data: data
-        }
+        });
     }
 
     const { data, loading, error } = useFetch(request, [])
@@ -71,11 +63,14 @@ const useCocktailInfo = (id) => {
 }
 
 const useNewCocktail = () => {
-    const request = {
+    const [request, setRequest] = useState({
         api: 'v2',
         db: 'cocktail',
-        action: 'new'
-    }
+        action: 'new',
+        id: null,
+        value: null,
+        data: null
+    });
 
     const { data, loading, error } = useFetch(request, [])
     return { data, loading, error }

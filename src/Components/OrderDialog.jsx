@@ -9,11 +9,12 @@ import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const OrderDialog = (props) => {
+    let cocktail = props.data.cocktail;
     return (
         <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    {this.props.items.name}
+                    {cocktail.name}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-0">
@@ -22,8 +23,8 @@ const OrderDialog = (props) => {
                     <h5>Recepie:</h5>
                     <ListGroup variant="flush">
                         {
-                            Object.keys(props.items.recepie).map((key) => (
-                                <ListGroup.Item>{props.ingrediants[key]}: {props.items.recepie[key]["amount"]}ml</ListGroup.Item>
+                            Object.keys(cocktail.recepie).map((key) => (
+                                <ListGroup.Item key={key}>{key}: {cocktail.recepie[key]["amount"]}ml</ListGroup.Item>
                             ))
                         }
                     </ListGroup>

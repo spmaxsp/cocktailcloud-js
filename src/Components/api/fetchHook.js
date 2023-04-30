@@ -11,7 +11,7 @@ const URLlookup = (request, api_url) => {
     else {
         url = `${api_url}/${db}/${action}`
     }
-    
+
     if (id) {
         url += `/${id}`
     }
@@ -20,13 +20,16 @@ const URLlookup = (request, api_url) => {
     }
     if (data) {
         url += '?'
-        data.forEach((item, index) => {
-            url += `${item.key}=${item.value}`
-            if (index < data.length - 1) {
-                url += '&'
+        let isFirstParam = true
+        for (const key in data) {
+            if (isFirstParam) {
+            isFirstParam = false
+            } else {
+            url += '&'
             }
-        })
-    }   
+            url += `${key}=${data[key]}`
+        }
+    }  
     console.log(url)            
     return url
 }
