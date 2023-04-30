@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
 
 const URLlookup = (request, api_url) => {
-    const { db, action, id, value, data } = request
-    let url = `${api_url}/${db}/${action}`
+    const { api, db, action, id, value, data } = request
+
+    let url = ``
+
+    if ( api === 'v2') {
+        url = `${api_url}/v2/${db}/${action}`
+    }
+    else {
+        url = `${api_url}/${db}/${action}`
+    }
+    
     if (id) {
         url += `/${id}`
     }

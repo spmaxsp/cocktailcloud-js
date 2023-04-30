@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useEffect } from 'react'
 
 import { useAPI } from './api/ApiContext.js';
-import useFetch from './api/fetchHook.js';
+import { useCocktailList } from './api/cocktailFetchHooks';
 
 
 const SortMenue = () => {
@@ -65,15 +65,7 @@ const SortMenue = () => {
 
 const CocktailSelection = (props) => {
 
-    const { loading, error, data } = useFetch(
-                                        {
-                                            'db': 'cocktail',
-                                            'action': 'list',
-                                            'id': null,
-                                            'value': null,
-                                            'data': null
-                                        }
-                                        );
+    const { data, loading, error, refreshCocktails, removeCocktail } = useCocktailList();
     
     const renderCard = (id) => {
         console.log(id);
@@ -91,6 +83,7 @@ const CocktailSelection = (props) => {
         return(
             <Container>
                 <SortMenue/>
+                <Button onClick={refreshCocktails}>Refresh</Button>
                 <Container>
                     <Row pb={4}>
                         {data.cocktails.map(renderCard)}
