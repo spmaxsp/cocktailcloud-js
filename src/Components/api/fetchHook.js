@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const URLlookup = (request, api_url) => {
-    const { api, db, action, id, value, data } = request
+    const { api, db, action, id, value, value2, data } = request
 
     let url = ``
 
@@ -17,6 +17,9 @@ const URLlookup = (request, api_url) => {
     }
     if (value) {
         url += `/${value}`
+    }
+    if (value2) {
+        url += `/${value2}`
     }
     if (data) {
         url += '?'
@@ -34,7 +37,7 @@ const URLlookup = (request, api_url) => {
     return url
 }
 
-const useFetch = (request, initialData) => {
+const useFetch = (request) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -50,14 +53,20 @@ const useFetch = (request, initialData) => {
                 setError(res.error_msg.error)
             }
             else {
-                setData(res.data)
+                if (res.data.error) {
+                    setError(res.data.error_msg)
+                }
+                else {
+                    setError(null)
+                    setData(res.data)
+                }
             }
         })
         .catch((err) => {
             setError(err);
         })
         .finally(() => setLoading(false));
-    }, []);
+    }, [request]);
     
     return { data, loading, error };
 };
