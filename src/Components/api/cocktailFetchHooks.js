@@ -8,24 +8,45 @@ const useCocktailList = () => {
         action: 'list',
         id: null,
         value: null,
+        value2: null,
         data: null
     });
 
     const refreshCocktails = () => {
         setRequest({
-            action: 'list'
+            ...request,
+            action: 'list',
+            id: null,
+            value: null,
+            value2: null,
+            data: null
         });
     };
 
     const removeCocktail = (id) => {
         setRequest({
-            action: 'delete',
-            id: id
+            ...request,
+            action: 'remove',
+            id: id,
+            value: null,
+            value2: null,
+            data: null
+        });
+    };
+
+    const addCocktail = () => {
+        setRequest({
+            ...request,
+            action: 'new',
+            id: null,
+            value: null,
+            value2: null,
+            data: null
         });
     };
     
-    const { data, loading, error } = useFetch(request, []);
-    return { data, loading, error, refreshCocktails, removeCocktail };
+    const { data, loading, error } = useFetch(request);
+    return { data, loading, error, refreshCocktails, removeCocktail, addCocktail};
 };
 
 const useCocktailInfo = (id) => {
@@ -35,47 +56,71 @@ const useCocktailInfo = (id) => {
         action: 'info',
         id: id,
         value: null,
+        value2: null,
         data: {'format': 'long'}
     });
 
-    const refreshCocktail = (id) => {
+    const refreshCocktail = () => {
         setRequest({
-            action: 'info'
+            ...request,
+            action: 'info',
+            id: null,
+            value: null,
+            value2: null,
+            data: {'format': 'long'}
         });
     }
-    const editCocktail = (id, data) => {
+    const editCocktailname = (data) => {
         setRequest({
+            ...request,
             action: 'edit',
-            id: id,
-            data: data
+            value: 'name',
+            value2: null,
+            data: {'val':data, 'format': 'long'}
         });
     }
-    const editCocktailIngredients = (id, data) => {
+
+    const editCocktaillikes = (data) => {
         setRequest({
-            action: 'editIngredients',
-            id: id,
-            data: data
+            ...request,
+            action: 'edit',
+            value: 'likes',
+            data: {'val':data, 'format': 'long'}
         });
     }
 
-    const { data, loading, error } = useFetch(request, [])
-    return { data, loading, error, refreshCocktail, editCocktail, editCocktailIngredients }
+    const addCocktailIngredients = (ingredient, amount, priority) => {
+        setRequest({
+            ...request,
+            action: 'edit',
+            value: 'ingrediants',
+            value2: ingredient,
+            data: {'amount':amount, 'priority':priority, 'format': 'long'}
+        });
+    }
+
+    const removeCocktailIngredients = (ingredient) => {
+        setRequest({
+            ...request,
+            action: 'edit',
+            value: 'ingrediants',
+            value2: ingredient,
+            data: {'amount':0, 'priority':0, 'format': 'long'}
+        });
+    }
+
+    const editCocktailIngredients = (ingredient, amount, priority) => {
+        setRequest({
+            ...request,
+            action: 'edit',
+            value: 'ingrediants',
+            value2: ingredient,
+            data: {'amount':amount, 'priority':priority, 'format': 'long'}
+        });
+    }
+
+    const { data, loading, error } = useFetch(request)
+    return { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients }
 }
 
-const useNewCocktail = () => {
-    const [request, setRequest] = useState({
-        api: 'v2',
-        db: 'cocktail',
-        action: 'new',
-        id: null,
-        value: null,
-        data: null
-    });
-
-    const { data, loading, error } = useFetch(request, [])
-    return { data, loading, error }
-}
-
-export { useCocktailList, useCocktailInfo, useNewCocktail }
-
-    
+export { useCocktailList, useCocktailInfo }
