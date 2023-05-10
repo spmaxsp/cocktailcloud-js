@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { APIProvider } from './api/ApiContext.js';
 
 import CocktailSelection from './CocktailSelection'
-//import SettingsModal from './SettingsMenue'
+import SettingsModal from './SettingsMenue'
 
 
 var Element  = Scroll.Element;
@@ -76,12 +76,12 @@ const Navigation = () => {
                     <Button variant="outline-light" onClick={() => setModalShow(true)}>Settings</Button>
                 </Container>
             </Navbar>
+
+            <SettingsModal show={modalShow} onHide={() => setModalShow(false)} />
             
         </>
     );
 }
 
 export default MainPage;
-
-// <SettingsModal show={modalShow} onHide={() => setModalShow(false)} />
 
