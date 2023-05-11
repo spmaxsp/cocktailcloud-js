@@ -18,7 +18,7 @@ const CocktailCard = (props) => {
 
     const [modalShow, setModalShow] = useState(false);
 
-    const { data, loading, error, refreshCocktail, editCocktail, editCocktailIngredients } = useCocktailInfo(props.id);
+    const { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients } = useCocktailInfo(props.id);
 
     
     if (loading || !data) {

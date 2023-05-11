@@ -65,7 +65,7 @@ const SortMenue = () => {
 
 const CocktailSelection = (props) => {
 
-    const { data, loading, error, refreshCocktails, removeCocktail } = useCocktailList();
+    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList();
     
     const renderCard = (id) => {
         console.log(id);
@@ -79,7 +79,6 @@ const CocktailSelection = (props) => {
         return <div>Error: {error.message}</div>;
     }
     else{
-        console.log(data);
         return(
             <Container>
                 <SortMenue/>
