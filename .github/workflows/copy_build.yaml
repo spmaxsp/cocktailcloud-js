@@ -27,18 +27,12 @@ jobs:
 
       - name: Copy build dir to Backend repo
         run: |
-          mkdir -p cocktailcloud-api/react-app/build
-          rsync -av --progress cocktailcloud-js/build/* cocktailcloud-api/react-app/build
-          ls -l cocktailcloud-api/react-app/build
-          ls -l cocktailcloud-api
-          ls -l
+          mkdir -p cocktailcloud-api/react-app/js-build
+          rsync -av --progress cocktailcloud-js/build/* cocktailcloud-api/react-app/js-build
 
       - name: Commit changes
         run: |
           cd cocktailcloud-api
-          ls -l react-app/build
-          ls -l
-          touch test.txt
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
           git status
