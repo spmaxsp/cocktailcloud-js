@@ -13,16 +13,32 @@ jobs:
   copy-file:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout source (js)
         uses: actions/checkout@v2
-      - name: Push to another repo
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
-          source_file: './build/*'
-          destination_repo: 'spmaxsp/cocktailcloud-api'
-          destination_folder: 'react-frontend/build'
-          user_email: 'actions@github.com'
-          user_name: 'github-actions'
-          commit_message: 'copy build from cocktailcloud-js repo'
+          repository: 'spmaxsp/cocktailcloud-api'
+          path: 'Backend'
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Checkout destination (api)
+        uses: actions/checkout@v2
+        with:
+          repository: 'spmaxsp/cocktailcloud-api'
+          path: 'Backend'
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Copy build dir to Backend repo
+        run: |
+          mkdir -p react-app/build
+          rsync -av --progress react-app/build/ Backend/build/
+
+      - name: Commit changes
+        run: |
+          cd Backend
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Copy build dir from cocktailcloud-js repo"
+          git push
+          
+
