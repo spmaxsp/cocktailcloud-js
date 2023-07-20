@@ -35,6 +35,7 @@ jobs:
           cd cocktailcloud-api
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
+          git status
           git add .
           git commit -m "Copy build dir from cocktailcloud-js repo"
           git push
