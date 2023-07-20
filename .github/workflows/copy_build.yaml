@@ -16,21 +16,19 @@ jobs:
       - name: Checkout source (js)
         uses: actions/checkout@v2
         with:
-          repository: 'spmaxsp/cocktailcloud-api'
-          path: 'Backend'
-          token: ${{ secrets.ACCESS_TOKEN }}
+          repository: 'spmaxsp/cocktailcloud-js'
+          path: 'cocktailcloud-js'
 
       - name: Checkout destination (api)
         uses: actions/checkout@v2
         with:
           repository: 'spmaxsp/cocktailcloud-api'
-          path: 'Backend'
-          token: ${{ secrets.ACCESS_TOKEN }}
+          path: 'cocktailcloud-api'
 
       - name: Copy build dir to Backend repo
         run: |
-          mkdir -p react-app/build
-          rsync -av --progress react-app/build/ Backend/build/
+          mkdir -p cocktailcloud-api/react-app/build
+          rsync -av --progress cocktailcloud-js/build cocktailcloud-api/react-app/build
 
       - name: Commit changes
         run: |
