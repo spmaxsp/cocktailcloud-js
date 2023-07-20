@@ -42,7 +42,7 @@ const useFetch = (request) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const api_url = 'http://localhost:43560'    
+    const api_url = 'http://localhost:43560/api'    
     
     useEffect(() => {
         setLoading(true);
