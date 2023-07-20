@@ -29,6 +29,8 @@ jobs:
         run: |
           mkdir -p cocktailcloud-api/react-app/build
           rsync -av --progress cocktailcloud-js/build cocktailcloud-api/react-app/build
+          ls -l cocktailcloud-api/react-app/build
+          ls -l
 
       - name: Commit changes
         run: |
