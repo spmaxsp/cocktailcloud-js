@@ -6,7 +6,7 @@ export const useAPI = () => React.useContext(APIContext)
 
 export const APIProvider = ({ children }) => {
     const [forceUpdate, setForceUpdate] = React.useState(0)
-    const [api_url, setAPI_URL] = React.useState('http://localhost:43560')
+    const [api_url, setAPI_URL] = React.useState('http://localhost:43560/api')
     const [options, setOptions] = React.useState({
                                                     method: 'GET',
                                                     headers: {
