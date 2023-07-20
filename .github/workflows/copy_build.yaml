@@ -39,6 +39,6 @@ jobs:
           git status
           git add .
           git commit -m "Copy build dir from cocktailcloud-js repo"
-          git push
+          git push --set-upstream https://user:$GITHUB_TOKEN@github.com/spmaxsp/cocktailcloud-api
           
 
