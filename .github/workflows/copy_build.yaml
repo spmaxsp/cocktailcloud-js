@@ -36,6 +36,7 @@ jobs:
       - name: Commit changes
         run: |
           cd cocktailcloud-api
+          touch test.txt
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
           git status
