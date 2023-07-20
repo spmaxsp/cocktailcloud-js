@@ -20,7 +20,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
-          source_file: 'build'
+          source_file: 'build/*'
           destination_repo: 'spmaxsp/cocktailcloud-api'
           destination_folder: 'react-frontend/build'
           user_email: 'actions@github.com'
