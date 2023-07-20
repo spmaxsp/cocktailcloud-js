@@ -36,6 +36,8 @@ jobs:
       - name: Commit changes
         run: |
           cd cocktailcloud-api
+          ls -l react-app/build
+          ls -l
           touch test.txt
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
