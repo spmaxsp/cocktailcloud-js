@@ -3,8 +3,8 @@ name: Copy build dir to Backend repo
 on:
   push:
     branches:
-      - main
-      paths:
+      - master
+    paths:
       - 'build/**'
   workflow_dispatch:
 
