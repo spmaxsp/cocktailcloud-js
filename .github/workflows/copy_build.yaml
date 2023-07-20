@@ -1,0 +1,28 @@
+name: Copy build dir to Backend repo
+
+on:
+  push:
+    branches:
+      - main
+      paths:
+      - 'build/**'
+  workflow_dispatch:
+
+
+jobs:
+  copy-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Push to another repo
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          source_file: 'build'
+          destination_repo: 'spmaxsp/cocktailcloud-api'
+          destination_folder: 'react-frontend/build'
+          user_email: 'actions@github.com'
+          user_name: 'github-actions'
+          commit_message: 'copy build from cocktailcloud-js repo'
