@@ -44,5 +44,5 @@ jobs:
         run: |
           set DESTINATION_REPOSITORY_USERNAME=spmaxsp
 
-          git push --set-upstream https://spmaxsp:$EXTERNAL_API_TOKEN_GITHUB@github.com/spmaxsp/cocktailcloud-api.git
+                    git push https://spmaxsp:$secrets.EXTERNAL_API_TOKEN_GITHUB@github.com/spmaxsp/cocktailcloud-api.git --set-upstream main
           
