@@ -39,6 +39,10 @@ jobs:
           git status
           git add .
           git commit -m "Copy build dir from cocktailcloud-js repo"
-          git push --set-upstream https://user:$GITHUB_TOKEN@github.com/spmaxsp/cocktailcloud-api
-          
 
+      - name: Push changes
+        run: |
+          set DESTINATION_REPOSITORY_USERNAME=spmaxsp
+
+          git push --set-upstream https://spmaxsp:$EXTERNAL_API_TOKEN_GITHUB@github.com/spmaxsp/cocktailcloud-api
+          
