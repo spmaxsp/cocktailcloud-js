@@ -33,11 +33,11 @@ const CocktailSettings = (props) => {
     else{
         return (
             <>
-                <Accordion defaultActiveKey="0">
+                <ListGroup variant="flush">
                     {
                         data.cocktails.map(renderEntry)
                     }
-                </Accordion>
+                </ListGroup>
                 <br />
                 <Form.Control type="button" value="Add New" variant="danger" onClick={() => addCocktail()} />
             </>
@@ -87,6 +87,8 @@ const CocktailEditor = (props) => {
         }
     }
 
+    const [show, setShow] = useState(props.show_new == props.id);
+
     if (!data) {
         return <div>Loading...</div>;
     }
@@ -99,44 +101,49 @@ const CocktailEditor = (props) => {
         console.log(cocktail);
         
         return (
-            <Accordion.Item eventKey={props.id}>
-                <Accordion.Header>
-                    {cocktail.name}
-                </Accordion.Header>
-                <Accordion.Body>
-                    <h4>Name</h4>
-                    <Form.Control type="text" value={coktail_name} onChange={(e) => setCocktail_name(e.target.value)}/>
-                    <Form.Control type="button" value="Save" variant="primary" onClick={() => onChangeName()}/>
-                    
-                    <h4>Ingredients</h4>
-                    <ListGroup variant="flush">
-                        {
-                            Object.keys(cocktail.recepie).map((key) => (
-                                <ListGroup.Item>
-                                    <h6>{key}:</h6>
-                                    <Form.Control type="number" value={cocktail.recepie[key]["amount"]} onChange={(e) => onChangeAmount(e, cocktail.recepie[key]["id"], cocktail.recepie[key]["priority"])}/>
-                                    <Form.Control type="number" value={cocktail.recepie[key]["priority"]} onChange={(e) => onChangePriority(e, cocktail.recepie[key]["id"], cocktail.recepie[key]["amount"])}/>
-                                    <Form.Control type="button" value="Remove" variant="danger" onClick={() => removeCocktailIngredients(cocktail.recepie[key]["id"])}/>
-                                </ListGroup.Item>
-                            ))
-                        }
-                        <ListGroup.Item>
-                            <Form.Select onChange={(e) => setAdd_optn(e.target.value)}>
-                                <option value="">Select an ingredient</option>
-                                {
-                                    Object.keys(cocktail.available).map((key) => (
-                                        <option value={key}>{cocktail.available[key]}</option>
-                                    ))
-                                }
-                            </Form.Select>
-                            <Form.Control type="button" value="Add" variant="primary" onClick={() => addIngredient()} />
-                        </ListGroup.Item>
-                    </ListGroup>
+            <>
+                <ListGroup.Item variant="flush">
+                    <Form.Control type="button" value={cocktail.name} onClick={() => setShow(true)} />
+                </ListGroup.Item>
+                <Modal show={show} onHide={() => setShow(false)} backdrop="static" >
+                    <Modal.Header closeButton>
+                        <Modal.Title>{cocktail.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h4>Name</h4>
+                        <Form.Control type="text" value={coktail_name} onChange={(e) => setCocktail_name(e.target.value)}/>
+                        <Form.Control type="button" value="Save" variant="primary" onClick={() => onChangeName()}/>
+                        
+                        <h4>Ingredients</h4>
+                        <ListGroup variant="flush">
+                            {
+                                Object.keys(cocktail.recepie).map((key) => (
+                                    <ListGroup.Item>
+                                        <h6>{key}:</h6>
+                                        <Form.Control type="number" value={cocktail.recepie[key]["amount"]} onChange={(e) => onChangeAmount(e, cocktail.recepie[key]["id"], cocktail.recepie[key]["priority"])}/>
+                                        <Form.Control type="number" value={cocktail.recepie[key]["priority"]} onChange={(e) => onChangePriority(e, cocktail.recepie[key]["id"], cocktail.recepie[key]["amount"])}/>
+                                        <Form.Control type="button" value="Remove" variant="danger" onClick={() => removeCocktailIngredients(cocktail.recepie[key]["id"])}/>
+                                    </ListGroup.Item>
+                                ))
+                            }
+                            <ListGroup.Item>
+                                <Form.Select onChange={(e) => setAdd_optn(e.target.value)}>
+                                    <option value="">Select an ingredient</option>
+                                    {
+                                        Object.keys(cocktail.available).map((key) => (
+                                            <option value={key}>{cocktail.available[key]}</option>
+                                        ))
+                                    }
+                                </Form.Select>
+                                <Form.Control type="button" value="Add" variant="primary" onClick={() => addIngredient()} />
+                            </ListGroup.Item>
+                        </ListGroup>
 
-                    <h4>Remove</h4>
-                    <Form.Control type="button" value="Remove" variant="danger" onClick={() => props.delete_func(props.id)}/>
-                </Accordion.Body>
-            </Accordion.Item>
+                        <h4>Remove</h4>
+                        <Form.Control type="button" value="Remove" variant="danger" onClick={() => props.delete_func(props.id)}/>
+                    </Modal.Body>  
+                </Modal>
+            </>
         )
     }
 }

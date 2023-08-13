@@ -3,9 +3,11 @@
 import React from 'react';
 
 import Modal from 'react-bootstrap/Modal';
-import Accordion from 'react-bootstrap/Accordion';
 
-import { Form, ListGroup } from 'react-bootstrap';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+
+import { Container, Form, ListGroup } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react'
 
@@ -103,37 +105,33 @@ const GlobalSettings = () => {
 
 const SettingsModal = (props) => { 
     return (
-        <Modal fullscreen="true" show={props.show} onHide={props.onHide} >
+        <Modal fullscreen="xl-down" show={props.show} onHide={props.onHide} size="lg">
             <Modal.Header closeButton>
             <Modal.Title>Modal</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Accordion defaultActiveKey="0">
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>Global Settings</Accordion.Header>
-                        <Accordion.Body>
-                            <GlobalSettings/>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                        <Accordion.Header>Mashine Configuration</Accordion.Header>
-                        <Accordion.Body>
-                            <ConfigurationSettings/>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                        <Accordion.Header>User Settings</Accordion.Header>
-                        <Accordion.Body>
-                            <UserSettings/>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="3">
-                        <Accordion.Header>Cocktail Settings</Accordion.Header>
-                        <Accordion.Body>
-                            <CocktailSettings/>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
+                <Tabs defaultActiveKey="0" id="uncontrolled-tab-example" className="mb-3">
+                <Tab eventKey="0" title="Global Settings">
+                    <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                        <GlobalSettings />
+                    </div>
+                </Tab>
+                <Tab eventKey="1" title="Machine Configuration">
+                    <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                        <ConfigurationSettings />
+                    </div>
+                </Tab>
+                <Tab eventKey="2" title="User Settings">
+                    <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                        <UserSettings />
+                    </div>
+                </Tab>
+                <Tab eventKey="3" title="Cocktail Settings">
+                    <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                        <CocktailSettings />
+                    </div>
+                </Tab>
+                </Tabs>
             </Modal.Body>
         </Modal>
     )
