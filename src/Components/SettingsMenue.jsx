@@ -19,7 +19,7 @@ import { useIngredients } from './api/ingredientsFetchHooks';
 import { useSettings } from './api/settingsFetchHooks';
 
 
-const MachineSettings = () => {
+const GlobalSettings = () => {
     const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings();
 
     const [password, setPassword] = useState('');
@@ -92,15 +92,79 @@ const IngredientSettings = () => {
     }
 }
 
-const GlobalSettings = () => {
-    return (
-        <>
-            <h4>Machine Connection</h4>
-            <MachineSettings/>
-            <h4>Ingredients:</h4>
-            <IngredientSettings/>
-        </>
-    )
+const ConnectionSettings = () => {
+    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings();
+
+    const [api_ip, setApiIp] = useState('');
+    const [api_port, setApiPort] = useState('');
+    const [ip, setIp] = useState('');
+    const [port, setPort] = useState('');
+
+    const saveApiIp = () => {
+        if (api_ip != '') {
+            editSettings('api_ip', api_ip);
+        }
+    }
+
+    const saveApiPort = () => {
+        if (api_port != '') {
+            editSettings('api_port', api_port);
+        }
+    }
+
+    const saveIp = () => {
+        if (ip != '') {
+            editSettings('machine_ip', ip);
+        }
+    }
+
+    const savePort = () => {
+        if (port != '') {
+            editSettings('machine_port', port);
+        }
+    }
+
+    useEffect(() => {
+        if (data && data.config) {
+            setApiIp(data.config.api_ip);
+            setApiPort(data.config.api_port);
+            setIp(data.config.machine_ip);
+            setPort(data.config.machine_port);
+        }
+    }, [data]);
+
+    if (!data) {
+        return <div>Loading...</div>;
+    }
+    else if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+    else{
+        return (
+            <>
+                <Form.Group>
+                    <Form.Label>Api IP</Form.Label>
+                    <Form.Control type="text" value={api_ip} onChange={(event) => setApiIp(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiIp()} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Api Port</Form.Label>
+                    <Form.Control type="number" value={api_port} onChange={(event) => setApiPort(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiPort()} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>IP</Form.Label>
+                    <Form.Control type="text" value={ip} onChange={(event) => setIp(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveIp()} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Port</Form.Label>
+                    <Form.Control type="number" value={port} onChange={(event) => setPort(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => savePort()} />
+                </Form.Group>
+            </>
+        )
+    }
 }
 
 const SettingsModal = (props) => { 
@@ -116,17 +180,27 @@ const SettingsModal = (props) => {
                         <GlobalSettings />
                     </div>
                 </Tab>
-                <Tab eventKey="1" title="Machine Configuration">
+                <Tab eventKey="1" title="Ingredient Settings">
+                    <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                        <IngredientSettings />
+                    </div>
+                </Tab>
+                <Tab eventKey="2" title="Machine Configuration">
                     <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                         <ConfigurationSettings />
                     </div>
                 </Tab>
-                <Tab eventKey="2" title="User Settings">
+                <Tab eventKey="3" title="Machine Connection">
+                    <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                        <ConnectionSettings />
+                    </div>
+                </Tab>
+                <Tab eventKey="4" title="User Settings">
                     <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                         <UserSettings />
                     </div>
                 </Tab>
-                <Tab eventKey="3" title="Cocktail Settings">
+                <Tab eventKey="5" title="Cocktail Settings">
                     <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                         <CocktailSettings />
                     </div>
