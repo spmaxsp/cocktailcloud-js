@@ -45,7 +45,7 @@ const ConfigurationSettings = (props) => {
 
         return(
             <>
-                <h4>Pumps</h4>
+                <h4>Pump Configuration</h4>
                     <Card body>
                         <ListGroup variant="flush">
                             {

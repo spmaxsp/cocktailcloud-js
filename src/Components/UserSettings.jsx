@@ -35,12 +35,16 @@ const UserSettings = (props) => {
     else{
         return (
             <>
-                <ListGroup variant="flush">
-                    {
-                        data.users.map(renderEntry)
-                    }
-                </ListGroup>
+                <h4>Edit Users</h4>
+                <Card body>
+                    <ListGroup variant="flush">
+                        {
+                            data.users.map(renderEntry)
+                        }
+                    </ListGroup>
+                </Card>
                 <br />
+                <h4>Add User</h4>
                 <Form.Control type="button" value="Add New" variant="danger" onClick={() => addUser()} />
             </>
         )

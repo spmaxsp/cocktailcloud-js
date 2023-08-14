@@ -33,12 +33,16 @@ const CocktailSettings = (props) => {
     else{
         return (
             <>
-                <ListGroup variant="flush">
-                    {
-                        data.cocktails.map(renderEntry)
-                    }
-                </ListGroup>
+                <h4>Edit Cocktails</h4>
+                <Card body>
+                    <ListGroup variant="flush">
+                        {
+                            data.cocktails.map(renderEntry)
+                        }
+                    </ListGroup>
+                </Card>
                 <br />
+                <h4>Add Cocktail</h4>
                 <Form.Control type="button" value="Add New" variant="danger" onClick={() => addCocktail()} />
             </>
         )
