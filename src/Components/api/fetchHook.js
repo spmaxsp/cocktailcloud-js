@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const URLlookup = (request, api_url) => {
+const ApiURLlookup = (request, api_url) => {
     const { api, db, action, id, value, value2, data } = request
 
     let url = ``
@@ -37,10 +37,27 @@ const URLlookup = (request, api_url) => {
     return url
 }
 
+const MachURLlookup = (request, mach_url) => {
+    const {  } = request
+
+    let url = ``
+
+    console.log(url)            
+    return url
+}
+
+
+const useMachineRequest = (request) => {
+    const mach_url = 'http://localhost:43560/api'
+
+    const { data, loading, error } = useFetch(MachURLlookup(request, mach_url));
+    return { data, loading, error };
+}
+
 const useApiFetch = (request) => {
     const api_url = 'http://localhost:43560/api'
 
-    const { data, loading, error } = useFetch(URLlookup(request, api_url));
+    const { data, loading, error } = useFetch(ApiURLlookup(request, api_url));
     return { data, loading, error };
 }
 
@@ -76,5 +93,6 @@ const useFetch = (request_url) => {
     return { data, loading, error };
 };
 
-export default useApiFetch;
+export { useApiFetch, useMachineRequest };
+
 
