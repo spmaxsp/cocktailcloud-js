@@ -1,4 +1,4 @@
-import useFetch from './fetchHook.js';
+import useApiFetch from './fetchHook.js';
 import { useState } from 'react';
 
 const useCocktailList = () => {
@@ -45,7 +45,7 @@ const useCocktailList = () => {
         });
     };
     
-    const { data, loading, error } = useFetch(request);
+    const { data, loading, error } = useApiFetch(request);
     return { data, loading, error, refreshCocktails, removeCocktail, addCocktail};
 };
 
@@ -119,7 +119,7 @@ const useCocktailInfo = (id) => {
         });
     }
 
-    const { data, loading, error } = useFetch(request)
+    const { data, loading, error } = useApiFetch(request)
     return { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients }
 }
 

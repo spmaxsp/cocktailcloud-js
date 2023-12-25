@@ -1,4 +1,4 @@
-import useFetch from './fetchHook.js';
+import useApiFetch from './fetchHook.js';
 import { useState } from 'react';
 
 const useIngredients = () => {
@@ -37,7 +37,7 @@ const useIngredients = () => {
         });
     };
 
-    const { data, loading, error } = useFetch(request);
+    const { data, loading, error } = useApiFetch(request);
     return { data, loading, error, refreshIngredients, addIngredient, removeIngredient };
 };
 

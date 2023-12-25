@@ -37,16 +37,21 @@ const URLlookup = (request, api_url) => {
     return url
 }
 
-const useFetch = (request) => {
+const useApiFetch = (request) => {
+    const api_url = 'http://localhost:43560/api'
+
+    const { data, loading, error } = useFetch(URLlookup(request, api_url));
+    return { data, loading, error };
+}
+
+const useFetch = (request_url) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-    const api_url = 'http://localhost:43560/api'    
+    const [error, setError] = useState(null); 
     
     useEffect(() => {
         setLoading(true);
-        fetch(URLlookup(request, api_url))
+        fetch(request_url)
         .then((res) => res.json())
         .then((res) => {
             if (res.error) {
@@ -66,10 +71,10 @@ const useFetch = (request) => {
             setError(err);
         })
         .finally(() => setLoading(false));
-    }, [request]);
+    }, [request_url]);
     
     return { data, loading, error };
 };
 
-export default useFetch;
+export default useApiFetch;
 
