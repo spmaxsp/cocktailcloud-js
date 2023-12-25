@@ -12,7 +12,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import { APIProvider } from './api/ApiContext.js';
+import { AppContextProvider } from './context/AppContext.js';
 
 import CocktailSelection from './CocktailSelection'
 import SettingsModal from './SettingsMenue'
@@ -23,13 +23,13 @@ var scroller = Scroll.scroller;
 
 const MainPage = () => {
     return (
-        <APIProvider>
+        <AppContextProvider>
             <Navigation/>
             <Banner/>
             <Element name="ScrollToElement"></Element>
             <CocktailSelection/>
             <Footer/>
-        </APIProvider>
+        </AppContextProvider>
     );
 }
 
