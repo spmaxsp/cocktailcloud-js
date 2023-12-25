@@ -1,4 +1,4 @@
-import useApiFetch from './fetchHook.js';
+import { useApiFetch } from './fetchHook.js';
 import { useState } from 'react';
 
 const useUserList = () => {
