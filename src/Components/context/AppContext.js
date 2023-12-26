@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useSettings } from '../api/settingsFetchHooks'
 
+
 const AppContext = createContext()
 
 export const useAppContext = () => useContext(AppContext)
@@ -15,8 +16,10 @@ export const AppContextProvider = ({ children }) => {
 
     const [password, setPassword] = useState('');
 
+    const [error_msg, setErrorMsg] = useState(['Some Test', 'Another Test Error Message']);
 
-    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings();
+
+    const { data, loading, error, refreshSettings, editSettings } = useSettings();
 
 
     useEffect(() => {
@@ -33,8 +36,20 @@ export const AppContextProvider = ({ children }) => {
     }, [data]);
 
 
+    const displayError = (message) => {
+        const id = Date.now();
+        setErrorMsg((prevErrors) => [...prevErrors, { id, message }]);
+
+        console.log("displayError: ", error_msg);
+    };
+    
+    const closeError = (id) => {
+        setErrorMsg((prevErrors) => prevErrors.filter((error_elem) => error_elem.id !== id));
+    };
+
+
     return (
-        <AppContext.Provider value={{ api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings }}>
+        <AppContext.Provider value={{ error_msg, api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings, closeError, displayError }}>
             {children}
         </AppContext.Provider>
     )
