@@ -10,15 +10,17 @@ import Badge from 'react-bootstrap/Badge';
 import OrderDialog from './OrderDialog'
 import { useState } from 'react';
 
-//import { useAPI } from './api/ApiContext.js';
 import { useCocktailInfo } from './api/cocktailFetchHooks';
+
+import { useAppContext } from './context/AppContext.js'; 
 
 
 const CocktailCard = (props) => { 
 
     const [modalShow, setModalShow] = useState(false);
 
-    const { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients } = useCocktailInfo(props.id);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error} = useCocktailInfo(props.id, api_ip, api_port);
 
     
     if (loading || !data) {

@@ -1,7 +1,7 @@
 import { useApiFetch } from './fetchHook.js';
 import { useState } from 'react';
 
-const useIngredients = () => {
+const useIngredients = (api_ip, api_port) => {
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'ingrediant',
@@ -37,7 +37,7 @@ const useIngredients = () => {
         });
     };
 
-    const { data, loading, error } = useApiFetch(request);
+    const { data, loading, error } = useApiFetch(request, api_ip, api_port);
     return { data, loading, error, refreshIngredients, addIngredient, removeIngredient };
 };
 

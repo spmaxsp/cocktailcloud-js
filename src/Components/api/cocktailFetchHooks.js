@@ -1,7 +1,7 @@
 import { useApiFetch } from './fetchHook.js';
 import { useState } from 'react';
 
-const useCocktailList = () => {
+const useCocktailList = (api_ip, api_port) => {
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'cocktail',
@@ -45,11 +45,11 @@ const useCocktailList = () => {
         });
     };
     
-    const { data, loading, error } = useApiFetch(request);
+    const { data, loading, error } = useApiFetch(request, api_ip, api_port);
     return { data, loading, error, refreshCocktails, removeCocktail, addCocktail};
 };
 
-const useCocktailInfo = (id) => {
+const useCocktailInfo = (id, api_ip, api_port) => {
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'cocktail',
@@ -119,7 +119,7 @@ const useCocktailInfo = (id) => {
         });
     }
 
-    const { data, loading, error } = useApiFetch(request)
+    const { data, loading, error } = useApiFetch(request, api_ip, api_port);
     return { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients }
 }
 

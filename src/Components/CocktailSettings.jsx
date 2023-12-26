@@ -8,15 +8,17 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
 
+import { useState , useEffect } from 'react';
 
 import { useCocktailList } from './api/cocktailFetchHooks';
 import { useCocktailInfo } from './api/cocktailFetchHooks';
 
-import { useState , useEffect } from 'react';
+import { useAppContext } from './context/AppContext.js'; 
 
 const CocktailSettings = (props) => {
 
-    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList();
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList(api_ip, api_port);
 
     const renderEntry = (id) => {
         return (
@@ -50,7 +52,9 @@ const CocktailSettings = (props) => {
 }
 
 const CocktailEditor = (props) => {
-    const { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients } = useCocktailInfo(props.id);
+
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients } = useCocktailInfo(props.id, api_ip, api_port);
 
     const [add_optn, setAdd_optn] = useState('');
     const [coktail_name, setCocktail_name] = useState('');

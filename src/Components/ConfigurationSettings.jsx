@@ -7,9 +7,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 import { useSettings } from './api/settingsFetchHooks';
 
+import { useAppContext } from './context/AppContext.js'; 
+
 const ConfigurationSettings = (props) => {
     
-    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings();
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings(api_ip, api_port);
 
     const manual_callback = (e) => {
         let new_ids = e.map((option) => option.value);

@@ -10,15 +10,18 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
 
+import { useState , useEffect } from 'react';
 
 import { useUserList } from './api/userFetchHooks';
 import { useUserInfo } from './api/userFetchHooks';
 
-import { useState , useEffect } from 'react';
+import { useAppContext } from './context/AppContext.js'; 
+
 
 const UserSettings = (props) => {
 
-    const { data, loading, error, refreshUser, removeUser, addUser} = useUserList();
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshUser, removeUser, addUser} = useUserList(api_ip, api_port);
 
     const renderEntry = (id) => {
         return (
@@ -52,7 +55,9 @@ const UserSettings = (props) => {
 }
 
 const UserEditor = (props) => {
-    const { data, loading, error, refreshUser, editUsername, editUserfield } = useUserInfo(props.id);
+
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshUser, editUsername, editUserfield } = useUserInfo(props.id, api_ip, api_port);
 
     const [user_name, setUser_name] = useState('');
     const [user_drinks, setUser_drinks] = useState(0);

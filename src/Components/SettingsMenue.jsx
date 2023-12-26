@@ -16,7 +16,6 @@ import CocktailSettings from './CocktailSettings'
 import UserSettings from './UserSettings'
 
 import { useIngredients } from './api/ingredientsFetchHooks';
-import { useSettings } from './api/settingsFetchHooks';
 
 import { useAppContext } from './context/AppContext.js';
 
@@ -43,7 +42,9 @@ const GlobalSettings = () => {
 }
 
 const IngredientSettings = () => {
-    const { data, loading, error, refreshIngredients, addIngredient, removeIngredient } = useIngredients();
+
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshIngredients, addIngredient, removeIngredient } = useIngredients(api_ip, api_port);
 
     const [new_ingredient, setNew_ingredient] = useState('');
 

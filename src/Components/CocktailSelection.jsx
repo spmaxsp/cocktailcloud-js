@@ -9,11 +9,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import CocktailCard from './CocktailCard'
-import { useState } from 'react';
-import { useEffect } from 'react'
 
-//import { useAPI } from './api/ApiContext.js';
 import { useCocktailList } from './api/cocktailFetchHooks';
+
+import { useAppContext } from './context/AppContext.js'; 
 
 
 const SortMenue = () => {
@@ -65,7 +64,8 @@ const SortMenue = () => {
 
 const CocktailSelection = (props) => {
 
-    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList();
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList(api_ip, api_port);
     
     const renderCard = (id) => {
         console.log(id);

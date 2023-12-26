@@ -54,8 +54,9 @@ const useMachineRequest = (request) => {
     return { data, loading, error };
 }
 
-const useApiFetch = (request) => {
-    const api_url = 'http://localhost:43560/api'
+const useApiFetch = (request, api_ip, api_port) => {
+    const api_url = 'http://' + api_ip + ':' + api_port + '/api'
+    console.log("api url: ", api_url)
 
     const { data, loading, error } = useFetch(ApiURLlookup(request, api_url));
     return { data, loading, error };
