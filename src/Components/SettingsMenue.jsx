@@ -22,7 +22,7 @@ import { useAppContext } from './context/AppContext.js';
 
 
 const GlobalSettings = () => {
-    const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings } = useAppContext();
+    const { password, setPassword, editSettings } = useAppContext();
 
     const savePassword = () => {
         if (password != '') {
@@ -79,7 +79,7 @@ const IngredientSettings = () => {
 }
 
 const ConnectionSettings = () => {
-    const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings } = useAppContext();
+    const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, editSettings, refreshSettings } = useAppContext();
 
     const saveApiIp = () => {
         if (api_ip != '') {
