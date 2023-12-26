@@ -18,11 +18,11 @@ import UserSettings from './UserSettings'
 import { useIngredients } from './api/ingredientsFetchHooks';
 import { useSettings } from './api/settingsFetchHooks';
 
+import { useAppContext } from './context/AppContext.js';
+
 
 const GlobalSettings = () => {
-    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings();
-
-    const [password, setPassword] = useState('');
+    const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings } = useAppContext();
 
     const savePassword = () => {
         if (password != '') {
@@ -30,30 +30,16 @@ const GlobalSettings = () => {
         }
     }
 
-    useEffect(() => {
-        if (data && data.config && data.config.password) {
-            setPassword(data.config.password);
-        }
-    }, [data]);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
-    else if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-    else{
-        return (
-            <>
-                <h4>Global Settings</h4>
-                <Form.Group>
-                    <Form.Label>Pin Number</Form.Label>
-                    <Form.Control type="number" value={password} onChange={(event) => setPassword(event.target.value)} />
-                    <Form.Control type="button" value="Save" variant="danger" onClick={() => savePassword()} />
-                </Form.Group>
-            </>
-        )
-    }
+    return (
+        <>
+            <h4>Global Settings</h4>
+            <Form.Group>
+                <Form.Label>Pin Number</Form.Label>
+                <Form.Control type="number" value={password} onChange={(event) => setPassword(event.target.value)} />
+                <Form.Control type="button" value="Save" variant="danger" onClick={() => savePassword()} />
+            </Form.Group>
+        </>
+    )
 }
 
 const IngredientSettings = () => {
@@ -93,12 +79,7 @@ const IngredientSettings = () => {
 }
 
 const ConnectionSettings = () => {
-    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings();
-
-    const [api_ip, setApiIp] = useState('');
-    const [api_port, setApiPort] = useState('');
-    const [ip, setIp] = useState('');
-    const [port, setPort] = useState('');
+    const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings } = useAppContext();
 
     const saveApiIp = () => {
         if (api_ip != '') {
@@ -124,50 +105,33 @@ const ConnectionSettings = () => {
         }
     }
 
-    useEffect(() => {
-        if (data && data.config) {
-            setApiIp(data.config.api_ip);
-            setApiPort(data.config.api_port);
-            setIp(data.config.machine_ip);
-            setPort(data.config.machine_port);
-        }
-    }, [data]);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
-    else if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-    else{
-        return (
-            <>
-                <h4>IP Settings</h4>
-                <Card body>
-                    <Form.Group>
-                        <Form.Label>Api IP</Form.Label>
-                        <Form.Control type="text" value={api_ip} onChange={(event) => setApiIp(event.target.value)} />
-                        <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiIp()} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Api Port</Form.Label>
-                        <Form.Control type="number" value={api_port} onChange={(event) => setApiPort(event.target.value)} />
-                        <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiPort()} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>IP</Form.Label>
-                        <Form.Control type="text" value={ip} onChange={(event) => setIp(event.target.value)} />
-                        <Form.Control type="button" value="Save" variant="danger" onClick={() => saveIp()} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Port</Form.Label>
-                        <Form.Control type="number" value={port} onChange={(event) => setPort(event.target.value)} />
-                        <Form.Control type="button" value="Save" variant="danger" onClick={() => savePort()} />
-                    </Form.Group>
-                </Card>
-            </>
-        )
-    }
+    return (
+        <>
+            <h4>IP Settings</h4>
+            <Card body>
+                <Form.Group>
+                    <Form.Label>Api IP</Form.Label>
+                    <Form.Control type="text" value={api_ip} onChange={(event) => setApiIp(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiIp()} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Api Port</Form.Label>
+                    <Form.Control type="number" value={api_port} onChange={(event) => setApiPort(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiPort()} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>IP</Form.Label>
+                    <Form.Control type="text" value={ip} onChange={(event) => setIp(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveIp()} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Port</Form.Label>
+                    <Form.Control type="number" value={port} onChange={(event) => setPort(event.target.value)} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => savePort()} />
+                </Form.Group>
+            </Card>
+        </>
+    )
 }
 
 const SettingsModal = (props) => { 
