@@ -15,53 +15,6 @@ import { useCocktailList } from './api/cocktailFetchHooks';
 import { useAppContext } from './context/AppContext.js'; 
 
 
-const SortMenue = () => {
-    return (
-        <Container float className='my-4 mx-3'>
-            <Row>
-                <Col lg={3} className='mb-3'>
-                    <InputGroup className="mb-3">
-                        <Form.Select aria-label="Default select example">
-                            <option>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </Form.Select>
-                        <Button variant="outline-secondary" id="button-addon2">
-                            Button
-                        </Button>
-                    </InputGroup>
-                </Col>
-                <Col lg={3} className='mb-3'>
-                    <InputGroup className="mb-3">
-                        <Form.Select aria-label="Default select example">
-                            <option>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </Form.Select>
-                        <Button variant="outline-secondary" id="button-addon2">
-                            Button
-                        </Button>
-                    </InputGroup>
-                </Col>
-                <Col className='mb-3 col-lg-auto'>
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            placeholder="Recipient's username"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
-                        />
-                        <Button variant="outline-secondary" id="button-addon2">
-                            Button
-                        </Button>
-                    </InputGroup>
-                </Col>
-            </Row>            
-        </Container>
-    );
-}
-
 const CocktailSelection = (props) => {
 
     const { api_ip, api_port } = useAppContext();
@@ -81,7 +34,6 @@ const CocktailSelection = (props) => {
     else{
         return(
             <Container>
-                <SortMenue/>
                 <Button onClick={refreshCocktails}>Refresh</Button>
                 <Container>
                     <Row pb={4}>
