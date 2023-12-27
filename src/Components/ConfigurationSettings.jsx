@@ -11,8 +11,8 @@ import { useAppContext } from './context/AppContext.js';
 
 const ConfigurationSettings = (props) => {
     
-    const { api_ip, api_port } = useAppContext();
-    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings(api_ip, api_port);
+    const { api_ip, api_port, displayError } = useAppContext();
+    const { data, loading, error, refreshSettings, editSettings, addManualIngredient, removeManualIngredient, editPump } = useSettings(api_ip, api_port, displayError);
 
     const manual_callback = (e) => {
         let new_ids = e.map((option) => option.value);

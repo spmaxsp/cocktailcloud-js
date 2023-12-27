@@ -43,8 +43,8 @@ const GlobalSettings = () => {
 
 const IngredientSettings = () => {
 
-    const { api_ip, api_port } = useAppContext();
-    const { data, loading, error, refreshIngredients, addIngredient, removeIngredient } = useIngredients(api_ip, api_port);
+    const { api_ip, api_port, displayError } = useAppContext();
+    const { data, loading, error, refreshIngredients, addIngredient, removeIngredient } = useIngredients(api_ip, api_port, displayError);
 
     const [new_ingredient, setNew_ingredient] = useState('');
 

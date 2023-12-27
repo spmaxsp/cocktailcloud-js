@@ -1,7 +1,7 @@
 import { useApiFetch } from './fetchHook.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const useUserList = (api_ip, api_port) => {
+const useUserList = (api_ip, api_port, displayError) => {
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'user',
@@ -44,12 +44,19 @@ const useUserList = (api_ip, api_port) => {
             data: null
         });
     };
-    
+
     const { data, loading, error } = useApiFetch(request, api_ip, api_port);
+
+    useEffect(() => {
+        if (error) {
+            displayError(error.message);
+        }
+    }, [error]);
+
     return { data, loading, error, refreshUser, removeUser, addUser};
 };
 
-const useUserInfo = (id, api_ip, api_port) => {
+const useUserInfo = (id, api_ip, api_port, displayError) => {
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'user',
@@ -87,9 +94,16 @@ const useUserInfo = (id, api_ip, api_port) => {
                 data: {'val':data }
             });
         }
-    }    
+    }   
 
     const { data, loading, error } = useApiFetch(request, api_ip, api_port)
+
+    useEffect(() => {
+        if (error) {
+            displayError(error.message);
+        }
+    }, [error]);
+
     return { data, loading, error, refreshUser, editUsername, editUserfield };
 };
 
