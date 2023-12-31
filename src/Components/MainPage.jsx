@@ -15,7 +15,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import { AppContextProvider } from './context/AppContext.js';
 
+import { ErrorContextProvider } from './context/ErrorContext.js';
+
 import { useAppContext } from './context/AppContext.js';
+
+import { useErrorContext } from './context/ErrorContext.js';
 
 import CocktailSelection from './CocktailSelection'
 import SettingsModal from './SettingsMenue'
@@ -26,22 +30,22 @@ var scroller = Scroll.scroller;
 
 const MainPage = () => {
     return (
-        <AppContextProvider>
+        <ErrorContextProvider>
+            <AppContextProvider>
+                <Navigation/>
+                <Banner/>
+                <Element name="ScrollToElement"></Element>
+                <CocktailSelection/>
+                <Footer/>
+            </AppContextProvider>
             <ErrorBanner/>
-            <Navigation/>
-            <Banner/>
-            <Element name="ScrollToElement"></Element>
-            <CocktailSelection/>
-            <Footer/>
-        </AppContextProvider>
+        </ErrorContextProvider>
     );
 }
 
 const Banner = () => {
     const randomstring = Math.random().toString(36).substring(2,7);
     const gGradient = { background: gradient(randomstring) }
-
-    const { displayError } = useAppContext();
 
     return (
         <Container fluid className="vh-100 d-flex align-items-center flex-column p-5" style={gGradient}>
@@ -56,7 +60,6 @@ const Banner = () => {
                             }>
                 Start ordering...
             </Button>
-            <Button variant="outline-dark" onClick={() => displayError("Test Error Message")}>Test Error</Button>
             <p className="text-white display-3 mt-auto">&#8595;</p>
         </Container>
     );
@@ -88,7 +91,7 @@ const ErrorMessage = ({ message, close_func }) => {
 };
 
 const ErrorBanner = () => {
-    const { error_msg, closeError } = useAppContext();
+    const { error_msg, closeError } = useErrorContext();
 
     return (
         <Container style={{position: "fixed", top: "0", width: "100%", zIndex: "1000"}}>

@@ -19,8 +19,8 @@ const CocktailCard = (props) => {
 
     const [modalShow, setModalShow] = useState(false);
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error} = useCocktailInfo(props.id, api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error} = useCocktailInfo(props.id, api_ip, api_port);
 
     
     if (loading || !data) {

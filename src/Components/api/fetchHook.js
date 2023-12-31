@@ -33,7 +33,7 @@ const ApiURLlookup = (request, api_url) => {
             url += `${key}=${data[key]}`
         }
     }  
-    console.log(url)            
+    //console.log(url)            
     return url
 }
 
@@ -42,7 +42,7 @@ const MachURLlookup = (request, mach_url) => {
 
     let url = ``
 
-    console.log(url)            
+    //console.log(url)            
     return url
 }
 
@@ -55,8 +55,12 @@ const useMachineRequest = (request) => {
 }
 
 const useApiFetch = (request, api_ip, api_port) => {
+
     const api_url = 'http://' + api_ip + ':' + api_port + '/api'
-    console.log("api url: ", api_url)
+
+    useEffect(() => {
+        console.log("api url: ", api_url)
+    }, [api_ip, api_port]);
 
     const { data, loading, error } = useFetch(ApiURLlookup(request, api_url));
     return { data, loading, error };
@@ -68,6 +72,8 @@ const useFetch = (request_url) => {
     const [error, setError] = useState(null); 
     
     useEffect(() => {
+        console.log("Running Fetch-Request: ", request_url)
+
         setLoading(true);
         fetch(request_url)
         .then((res) => res.json())

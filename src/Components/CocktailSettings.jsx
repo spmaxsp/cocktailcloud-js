@@ -17,8 +17,8 @@ import { useAppContext } from './context/AppContext.js';
 
 const CocktailSettings = (props) => {
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList(api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList(api_ip, api_port);
 
     const renderEntry = (id) => {
         return (
@@ -53,8 +53,8 @@ const CocktailSettings = (props) => {
 
 const CocktailEditor = (props) => {
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients } = useCocktailInfo(props.id, api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshCocktail, editCocktailname, editCocktaillikes, addCocktailIngredients, removeCocktailIngredients, editCocktailIngredients } = useCocktailInfo(props.id, api_ip, api_port);
 
     const [add_optn, setAdd_optn] = useState('');
     const [coktail_name, setCocktail_name] = useState('');

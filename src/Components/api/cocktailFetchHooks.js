@@ -1,7 +1,12 @@
 import { useApiFetch } from './fetchHook.js';
 import { useState, useEffect } from 'react';
 
-const useCocktailList = (api_ip, api_port, displayError) => {
+import { useErrorContext } from '../context/ErrorContext.js';
+
+const useCocktailList = (api_ip, api_port) => {
+
+    const { displayError } = useErrorContext();
+
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'cocktail',
@@ -56,7 +61,10 @@ const useCocktailList = (api_ip, api_port, displayError) => {
     return { data, loading, error, refreshCocktails, removeCocktail, addCocktail};
 };
 
-const useCocktailInfo = (id, api_ip, api_port, displayError) => {
+const useCocktailInfo = (id, api_ip, api_port) => {
+
+    const { displayError } = useErrorContext();
+
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'cocktail',

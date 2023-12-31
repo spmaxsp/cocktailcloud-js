@@ -23,18 +23,31 @@ import { useAppContext } from './context/AppContext.js';
 const GlobalSettings = () => {
     const { password, setPassword, editSettings } = useAppContext();
 
+    const [ password2, setPassword2 ] = useState('');
+
     const savePassword = () => {
-        if (password != '') {
-            editSettings('password', password);
+        if (password2 != '') {
+            editSettings('password', password2);
         }
     }
+
+    const applyPassword = () => {
+        if (password2 != '') {
+            setPassword(password2);
+        }
+    }
+
+    useEffect(() => {
+        setPassword2(password);
+    }, [password]);
 
     return (
         <>
             <h4>Global Settings</h4>
             <Form.Group>
                 <Form.Label>Pin Number</Form.Label>
-                <Form.Control type="number" value={password} onChange={(event) => setPassword(event.target.value)} />
+                <Form.Control type="number" value={password2} onChange={(event) => setPassword2(event.target.value)} />
+                <Form.Control type="button" value="Apply" variant="danger" onClick={() => savePassword()} />
                 <Form.Control type="button" value="Save" variant="danger" onClick={() => savePassword()} />
             </Form.Group>
         </>
@@ -43,8 +56,8 @@ const GlobalSettings = () => {
 
 const IngredientSettings = () => {
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error, refreshIngredients, addIngredient, removeIngredient } = useIngredients(api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshIngredients, addIngredient, removeIngredient } = useIngredients(api_ip, api_port);
 
     const [new_ingredient, setNew_ingredient] = useState('');
 
@@ -82,29 +95,56 @@ const IngredientSettings = () => {
 const ConnectionSettings = () => {
     const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, editSettings, refreshSettings } = useAppContext();
 
-    const saveApiIp = () => {
-        if (api_ip != '') {
-            editSettings('api_ip', api_ip);
-        }
-    }
+    const [api_ip2, setApiIp2] = useState('');
+    const [api_port2, setApiPort2] = useState('');
+    const [ip2, setIp2] = useState('');
+    const [port2, setPort2] = useState('');
 
-    const saveApiPort = () => {
-        if (api_port != '') {
-            editSettings('api_port', api_port);
+    const saveApi = () => {
+        if (api_ip2 != '') {
+            editSettings('api_ip', api_ip2);
+        }
+        if (api_port2 != '') {
+            editSettings('api_port', api_port2);
         }
     }
 
     const saveIp = () => {
-        if (ip != '') {
-            editSettings('machine_ip', ip);
+        if (ip2 != '') {
+            editSettings('ip', ip2);
+        }
+        if (port2 != '') {
+            editSettings('port', port2);
         }
     }
 
-    const savePort = () => {
-        if (port != '') {
-            editSettings('machine_port', port);
+    const applyApi = () => {
+        if (api_ip2 != '') {
+            setApiIp(api_ip2);
+        }
+        if (api_port2 != '') {
+            setApiPort(api_port2);
         }
     }
+
+    const applyIp = () => {
+        if (ip2 != '') {
+            setIp(ip2);
+        }
+        if (port2 != '') {
+            setPort(port2);
+        }
+    }
+
+    useEffect(() => {
+        setApiIp2(api_ip);
+        setApiPort2(api_port);
+    }, [api_ip, api_port]);
+
+    useEffect(() => {
+        setIp2(ip);
+        setPort2(port);
+    }, [ip, port]);
 
     return (
         <>
@@ -112,23 +152,19 @@ const ConnectionSettings = () => {
             <Card body>
                 <Form.Group>
                     <Form.Label>Api IP</Form.Label>
-                    <Form.Control type="text" value={api_ip} onChange={(event) => setApiIp(event.target.value)} />
-                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiIp()} />
-                </Form.Group>
-                <Form.Group>
+                    <Form.Control type="text" value={api_ip2} onChange={(event) => setApiIp2(event.target.value)} />
                     <Form.Label>Api Port</Form.Label>
-                    <Form.Control type="number" value={api_port} onChange={(event) => setApiPort(event.target.value)} />
-                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApiPort()} />
+                    <Form.Control type="number" value={api_port2} onChange={(event) => setApiPort2(event.target.value)} />
+                    <Form.Control type="button" value="Apply" variant="danger" onClick={() => applyApi()} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApi()} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>IP</Form.Label>
-                    <Form.Control type="text" value={ip} onChange={(event) => setIp(event.target.value)} />
-                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveIp()} />
-                </Form.Group>
-                <Form.Group>
+                    <Form.Control type="text" value={ip2} onChange={(event) => setIp2(event.target.value)} />
                     <Form.Label>Port</Form.Label>
-                    <Form.Control type="number" value={port} onChange={(event) => setPort(event.target.value)} />
-                    <Form.Control type="button" value="Save" variant="danger" onClick={() => savePort()} />
+                    <Form.Control type="number" value={port2} onChange={(event) => setPort2(event.target.value)} />
+                    <Form.Control type="button" value="Apply" variant="danger" onClick={() => applyIp()} />
+                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveIp()} />
                 </Form.Group>
             </Card>
         </>

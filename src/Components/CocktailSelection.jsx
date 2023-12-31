@@ -17,8 +17,8 @@ import { useAppContext } from './context/AppContext.js';
 
 const CocktailSelection = (props) => {
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList(api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshCocktails, removeCocktail, addCocktail} = useCocktailList(api_ip, api_port);
     
     const renderCard = (id) => {
         console.log(id);

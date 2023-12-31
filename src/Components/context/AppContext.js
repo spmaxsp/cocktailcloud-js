@@ -17,21 +17,7 @@ export const AppContextProvider = ({ children }) => {
     const [password, setPassword] = useState('');
 
 
-    const [error_msg, setErrorMsg] = useState(['Some Test', 'Another Test Error Message']);
-
-    const displayError = (message) => {
-        const id = Date.now();
-        setErrorMsg((prevErrors) => [...prevErrors, { id, message }]);
-
-        console.log("displayError: ", error_msg);
-    };
-    
-    const closeError = (id) => {
-        setErrorMsg((prevErrors) => prevErrors.filter((error_elem) => error_elem.id !== id));
-    };
-
-
-    const { data, loading, error, refreshSettings, editSettings } = useSettings(api_ip, api_port, displayError);
+    const { data, loading, error, refreshSettings, editSettings } = useSettings(api_ip, api_port);
 
 
     useEffect(() => {
@@ -49,7 +35,7 @@ export const AppContextProvider = ({ children }) => {
 
 
     return (
-        <AppContext.Provider value={{ error_msg, api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings, closeError, displayError }}>
+        <AppContext.Provider value={{ api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings }}>
             {children}
         </AppContext.Provider>
     )

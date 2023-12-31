@@ -1,7 +1,12 @@
 import { useApiFetch } from './fetchHook.js';
 import { useState, useEffect } from 'react';
 
-const useUserList = (api_ip, api_port, displayError) => {
+import { useErrorContext } from '../context/ErrorContext.js';
+
+const useUserList = (api_ip, api_port) => {
+
+    const { displayError } = useErrorContext();
+
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'user',
@@ -56,7 +61,10 @@ const useUserList = (api_ip, api_port, displayError) => {
     return { data, loading, error, refreshUser, removeUser, addUser};
 };
 
-const useUserInfo = (id, api_ip, api_port, displayError) => {
+const useUserInfo = (id, api_ip, api_port) => {
+
+    const { displayError } = useErrorContext();
+
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'user',

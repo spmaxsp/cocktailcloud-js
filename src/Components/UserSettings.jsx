@@ -20,8 +20,8 @@ import { useAppContext } from './context/AppContext.js';
 
 const UserSettings = (props) => {
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error, refreshUser, removeUser, addUser} = useUserList(api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshUser, removeUser, addUser} = useUserList(api_ip, api_port);
 
     const renderEntry = (id) => {
         return (
@@ -56,8 +56,8 @@ const UserSettings = (props) => {
 
 const UserEditor = (props) => {
 
-    const { api_ip, api_port, displayError } = useAppContext();
-    const { data, loading, error, refreshUser, editUsername, editUserfield } = useUserInfo(props.id, api_ip, api_port, displayError);
+    const { api_ip, api_port } = useAppContext();
+    const { data, loading, error, refreshUser, editUsername, editUserfield } = useUserInfo(props.id, api_ip, api_port);
 
     const [user_name, setUser_name] = useState('');
     const [user_drinks, setUser_drinks] = useState(0);

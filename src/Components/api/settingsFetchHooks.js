@@ -1,7 +1,12 @@
 import { useApiFetch } from './fetchHook.js';
 import { useState, useEffect } from 'react';
 
-const useSettings = (api_ip, api_port, displayError) => {
+import { useErrorContext } from '../context/ErrorContext.js';
+
+const useSettings = (api_ip, api_port) => {
+
+    const { displayError } = useErrorContext();
+
     const [request, setRequest] = useState({
         api: 'v2',
         db: 'settings',
