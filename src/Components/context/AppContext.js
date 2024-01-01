@@ -22,8 +22,6 @@ export const AppContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (data && data.config && data.config.password) {
-            setApiIp(data.config.api_ip);
-            setApiPort(data.config.api_port);
             setIp(data.config.machine_ip);
             setPort(data.config.machine_port);
 
