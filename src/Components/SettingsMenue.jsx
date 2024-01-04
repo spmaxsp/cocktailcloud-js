@@ -61,11 +61,8 @@ const IngredientSettings = () => {
 
     const [new_ingredient, setNew_ingredient] = useState('');
 
-    if (!data) {
+    if (loading || !data) {
         return <div>Loading...</div>;
-    }
-    else if (error) {
-        return <div>Error: {error.message}</div>;
     }
     else{
         return (

@@ -23,11 +23,8 @@ const ConfigurationSettings = (props) => {
         remove_ids.forEach((id) => removeManualIngredient(id));
     }
 
-    if (!data) {
+    if (loading || !data) {
         return <div>Loading...</div>;
-    }
-    else if (error) {
-        return <div>Error: {error.message}</div>;
     }
     else{
         let pump_list = data.config.pump;

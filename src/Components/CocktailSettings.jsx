@@ -26,11 +26,8 @@ const CocktailSettings = (props) => {
         )
     }
 
-    if (!data) {
+    if (loading || !data) {
         return <div>Loading...</div>;
-    }
-    else if (error) {
-        return <div>Error: {error.message}</div>;
     }
     else{
         return (
@@ -97,11 +94,8 @@ const CocktailEditor = (props) => {
 
     const [show, setShow] = useState(props.show_new == props.id);
 
-    if (!data) {
+    if (loading || !data) {
         return <div>Loading...</div>;
-    }
-    else if (error) {
-        return <div>Error: {error.message}</div>;
     }
     else{
         let cocktail = data.cocktail;

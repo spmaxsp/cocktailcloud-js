@@ -76,7 +76,7 @@ const ErrorMessage = ({ message, close_func }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             close_func();
-        }, 3000);
+        }, 5000);
     
         return () => {
             clearTimeout(timer);
