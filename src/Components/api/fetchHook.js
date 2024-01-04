@@ -79,20 +79,23 @@ const useFetch = (request_url) => {
         .then((res) => res.json())
         .then((res) => {
             if (res.error) {
-                setError(res.error_msg.error)
+                let error_str = "Error in API: " + res.error_msg + " [" + request_url + "]"
+                setError({message: error_str})
             }
             else {
-                if (res.data.error) {
-                    setError(res.data.error_msg)
-                }
-                else {
+                if (res.data) {
                     setError(null)
                     setData(res.data)
                 }
+                else {
+                    let error_str = "Error in Fetch-Request: No data returned [" + request_url + "]"
+                    setError({message: error_str})
+                }
             }
         })
-        .catch((err) => {
-            setError(err);
+        .catch((err) => { 
+            let error_str = "Error in Fetch-Request: " + err.message + " [" + request_url + "]"
+            setError({message: error_str})
         })
         .finally(() => setLoading(false));
     }, [request_url]);
