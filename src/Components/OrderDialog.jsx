@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { useState } from 'react';
+
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -9,6 +11,12 @@ import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const OrderDialog = (props) => {
+    const [size_input, setSize_input] = useState(1);
+
+    const Order = () => {
+        console.log("Ordering Cocktail: " + props.id + " with size: " + size_input);
+    }
+
     let cocktail = props.data.cocktail;
     return (
         <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
@@ -28,10 +36,12 @@ const OrderDialog = (props) => {
                             ))
                         }
                     </ListGroup>
-                    <Form.Label>Range</Form.Label>
-                    <Form.Range />
-                    <Form.Label>Range</Form.Label>
-                    <Form.Range />
+                    <Form.Label>Size Correction: x{size_input}</Form.Label>
+                    
+                    <Form.Range min={0.5} max={2} step={0.1} defaultValue={1} onChange={(event) => setSize_input(event.target.value)} />
+                    <Button variant="primary" onClick={() => Order()}>
+                        Order
+                    </Button>
                 </Container>
             </Modal.Body>
             <Modal.Footer>
