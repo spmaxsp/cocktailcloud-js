@@ -37,23 +37,6 @@ const ApiURLlookup = (request, api_url) => {
     return url
 }
 
-const MachURLlookup = (request, mach_url) => {
-    const {  } = request
-
-    let url = ``
-
-    //console.log(url)            
-    return url
-}
-
-
-const useMachineRequest = (request) => {
-    const mach_url = 'http://localhost:43560/api'
-
-    const { data, loading, error } = useFetch(MachURLlookup(request, mach_url));
-    return { data, loading, error };
-}
-
 const useApiFetch = (request, api_ip, api_port) => {
 
     const api_url = 'http://' + api_ip + ':' + api_port + '/api'
@@ -103,6 +86,6 @@ const useFetch = (request_url) => {
     return { data, loading, error };
 };
 
-export { useApiFetch, useMachineRequest };
+export { useApiFetch };
 
 

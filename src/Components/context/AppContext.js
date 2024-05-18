@@ -11,29 +11,20 @@ export const AppContextProvider = ({ children }) => {
 
     const [api_ip, setApiIp] = useState('localhost');
     const [api_port, setApiPort] = useState('43560');
-    const [ip, setIp] = useState('');
-    const [port, setPort] = useState('');
 
     const [password, setPassword] = useState('');
 
-
+    // load settings from api
     const { data, loading, error, refreshSettings, editSettings } = useSettings(api_ip, api_port);
-
-
     useEffect(() => {
         if (data && data.config && data.config.password) {
-            setIp(data.config.machine_ip);
-            setPort(data.config.machine_port);
-
             setPassword(data.config.password);
-
-            console.log("AppContext: ", api_ip, api_port, ip, port, password);
+            console.log("AppContext: ", api_ip, api_port, password);
         }
     }, [data]);
 
-
     return (
-        <AppContext.Provider value={{ api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, password, setPassword, editSettings, refreshSettings }}>
+        <AppContext.Provider value={{ api_ip, setApiIp, api_port, setApiPort, password, setPassword, editSettings, refreshSettings }}>
             {children}
         </AppContext.Provider>
     )
