@@ -9,7 +9,14 @@ class SocketService {
             this.socket.disconnect();
         }
 
-        this.socket = io(`http://${ip}:${port}`);
+        this.socket = io(`http://${ip}:${port}`, {
+            reconnection: true,
+            reconnectionDelay: 1000,
+            reconnectionDelayMax: 5000,
+            reconnectionAttempts: Infinity,
+            pingInterval: 10000,
+            pingTimeout: 2000
+        });
 
         this.socket.on('connect', () => {
             console.log('Connected to socket server');
