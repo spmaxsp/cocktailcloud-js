@@ -20,6 +20,7 @@ class SocketService {
 
         this.socket.on('connect', () => {
             console.log('Connected to socket server');
+            this.socket.emit('register_frontend', 'React Client');
         });
 
         this.socket.on('disconnect', () => {
