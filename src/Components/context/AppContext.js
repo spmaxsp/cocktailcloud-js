@@ -9,7 +9,7 @@ export const useAppContext = () => useContext(AppContext)
 export const AppContextProvider = ({ children }) => {
     const [forceUpdate, setForceUpdate] = useState(0)
 
-    const [api_ip, setApiIp] = useState('localhost');
+    const [api_ip, setApiIp] = useState(window.location.hostname);
     const [api_port, setApiPort] = useState('43560');
 
     const [password, setPassword] = useState('');
