@@ -14,15 +14,15 @@ import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import { AppContextProvider } from './context/AppContext.js';
-
 import { ErrorContextProvider } from './context/ErrorContext.js';
-
-import { useAppContext } from './context/AppContext.js';
+import { SocketContextProvider } from './context/SocketContext.js';
 
 import { useErrorContext } from './context/ErrorContext.js';
+import { useSocketContext } from './context/SocketContext.js';
 
 import CocktailSelection from './CocktailSelection'
 import SettingsModal from './SettingsMenue'
+import CocktailMakeDialog from './CocktailMakeDialog'
 
 
 var Element  = Scroll.Element;
@@ -32,11 +32,15 @@ const MainPage = () => {
     return (
         <ErrorContextProvider>
             <AppContextProvider>
-                <Navigation/>
-                <Banner/>
-                <Element name="ScrollToElement"></Element>
-                <CocktailSelection/>
-                <Footer/>
+                <SocketContextProvider>
+                    <Navigation/>
+                    <Banner/>
+                    <Element name="ScrollToElement"></Element>
+                    <CocktailSelection/>
+                    <Footer/>
+                    <MachineStatus_Banner/>
+                    <CocktailMakeDialog/>
+                </SocketContextProvider>
             </AppContextProvider>
             <ErrorBanner/>
         </ErrorContextProvider>
@@ -60,7 +64,7 @@ const Banner = () => {
                             }>
                 Start ordering...
             </Button>
-            <p className="text-white display-3 mt-auto">&#8595;</p>
+            <p className="text-white display-3 ">&#8595;</p>
         </Container>
     );
 }
@@ -68,6 +72,47 @@ const Banner = () => {
 const Footer = () => {
     return (
         <Container></Container>
+    );
+}
+
+const MachineStatus_Banner = () => {
+
+    const { socket, socketService } = useSocketContext();
+    const [ status, setStatus ] = useState("no API connection");
+
+    useEffect(() => {
+        if (socket) {
+            const handleIncomingMessage = (message) => {
+                setStatus(message)
+            };
+    
+            socketService.onMessage('machine_state', handleIncomingMessage);
+        
+            // Clean up the event listener on component unmount
+            return () => {
+                socketService.offMessage('message', handleIncomingMessage);
+            };
+        }
+        else {
+            setStatus("no API connection");
+        }
+    }, [socket, socketService]);
+
+    const getStatusColor = () => {
+        switch (status) {
+            case "machine offline":
+                return "bg-danger";
+            case "machine online":
+                return "bg-success";
+            default:
+                return "bg-info";
+        }
+    };
+
+    return (
+        <Container fluid className={`${getStatusColor()} text-white text-center fixed-bottom`}>
+            Machine Status: {status}
+        </Container>
     );
 }
 
