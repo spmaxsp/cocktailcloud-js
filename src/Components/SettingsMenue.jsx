@@ -90,12 +90,10 @@ const IngredientSettings = () => {
 }
 
 const ConnectionSettings = () => {
-    const { api_ip, setApiIp, api_port, setApiPort, ip, setIp, port, setPort, editSettings, refreshSettings } = useAppContext();
+    const { api_ip, setApiIp, api_port, setApiPort, editSettings, refreshSettings } = useAppContext();
 
     const [api_ip2, setApiIp2] = useState('');
     const [api_port2, setApiPort2] = useState('');
-    const [ip2, setIp2] = useState('');
-    const [port2, setPort2] = useState('');
 
     const saveApi = () => {
         if (api_ip2 != '') {
@@ -103,15 +101,6 @@ const ConnectionSettings = () => {
         }
         if (api_port2 != '') {
             editSettings('api_port', api_port2);
-        }
-    }
-
-    const saveIp = () => {
-        if (ip2 != '') {
-            editSettings('ip', ip2);
-        }
-        if (port2 != '') {
-            editSettings('port', port2);
         }
     }
 
@@ -124,24 +113,10 @@ const ConnectionSettings = () => {
         }
     }
 
-    const applyIp = () => {
-        if (ip2 != '') {
-            setIp(ip2);
-        }
-        if (port2 != '') {
-            setPort(port2);
-        }
-    }
-
     useEffect(() => {
         setApiIp2(api_ip);
         setApiPort2(api_port);
     }, [api_ip, api_port]);
-
-    useEffect(() => {
-        setIp2(ip);
-        setPort2(port);
-    }, [ip, port]);
 
     return (
         <>
@@ -154,14 +129,6 @@ const ConnectionSettings = () => {
                     <Form.Control type="number" value={api_port2} onChange={(event) => setApiPort2(event.target.value)} />
                     <Form.Control type="button" value="Apply" variant="danger" onClick={() => applyApi()} />
                     <Form.Control type="button" value="Save" variant="danger" onClick={() => saveApi()} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>IP</Form.Label>
-                    <Form.Control type="text" value={ip2} onChange={(event) => setIp2(event.target.value)} />
-                    <Form.Label>Port</Form.Label>
-                    <Form.Control type="number" value={port2} onChange={(event) => setPort2(event.target.value)} />
-                    <Form.Control type="button" value="Apply" variant="danger" onClick={() => applyIp()} />
-                    <Form.Control type="button" value="Save" variant="danger" onClick={() => saveIp()} />
                 </Form.Group>
             </Card>
         </>
@@ -191,7 +158,7 @@ const SettingsModal = (props) => {
                         <ConfigurationSettings />
                     </div>
                 </Tab>
-                <Tab eventKey="3" title="Machine Connection">
+                <Tab eventKey="3" title="API Connection">
                     <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                         <ConnectionSettings />
                     </div>
