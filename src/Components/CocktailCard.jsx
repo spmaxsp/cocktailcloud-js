@@ -22,17 +22,20 @@ const CocktailCard = (props) => {
     const { api_ip, api_port } = useAppContext();
     const { data, loading, error} = useCocktailInfo(props.id, api_ip, api_port);
 
+
     
     if (loading || !data) {
         return <div>Loading...</div>;
     }
     else{
         console.log(data);
+        console.log(api_ip);
         let cocktail = data.cocktail;
+        let img = `http://${api_ip}:${api_port}/image/get/cocktail/${props.id}`;
         return(
             <Col xs={12} md={4} pd={4}>
                 <Card>
-                    <Card.Img variant="top" src={"http://localhost:43560/image/get/cocktail/"  + props.id}/>
+                    <Card.Img variant="top" src={img} />
                     <Card.Body>
                         <Card.Title>{cocktail.name}</Card.Title>
                         <Card.Text>

@@ -30,7 +30,7 @@ const CocktailSelection = (props) => {
     }
     else{
         return(
-            <Container>
+            <Container className='pt-4 pb-5'>
                 <Button onClick={refreshCocktails}>Refresh</Button>
                 <Container>
                     <Row pb={4}>

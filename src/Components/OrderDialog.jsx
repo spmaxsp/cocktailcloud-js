@@ -9,15 +9,21 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { useSocketContext } from './context/SocketContext';
+import { useAppContext } from './context/AppContext';
 
 const OrderDialog = (props) => {
     const [size_input, setSize_input] = useState(1);
+    const { socket, socketService } = useSocketContext();
+    const { api_ip, api_port } = useAppContext();
 
     const Order = () => {
         console.log("Ordering Cocktail: " + props.id + " with size: " + size_input);
+        socketService.sendMessage('cocktail_request', { cocktail_id: props.id, size: size_input });
     }
 
     let cocktail = props.data.cocktail;
+    let img = `http://${api_ip}:${api_port}/image/get/cocktail/${props.id}`;
     return (
         <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton>
@@ -26,7 +32,7 @@ const OrderDialog = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-0">
-                <img src={"http://localhost:43560/image/get/cocktail/"  + props.id} className="img-fluid w-100 m-0 p-0" /> 
+                <img src={img} className="img-fluid w-100 m-0 p-0" /> 
                 <Container className="p-4">
                     <h5>Recepie:</h5>
                     <ListGroup variant="flush">
